@@ -8,7 +8,7 @@ public class Hello {
 	Printer printer;
 	
 	public String sayHello() {
-		return "Hello" + name; //->프로퍼티로 DI받은 이름을 이용
+		return "Hello " + name; //->프로퍼티로 DI받은 이름을 이용
 	}
 	
 	public void print() {
