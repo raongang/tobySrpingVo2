@@ -134,9 +134,16 @@ public class ApplicationContextTest {
 		child.refresh(); 
 		
 		Printer printer = child.getBean("printer", Printer.class);
-		//assertThat(printer,is(notNullValue()));
+		assertThat(printer,is(notNullValue()));
+		
+		
+		Hello hello = child.getBean("hello",Hello.class);
+		assertThat(hello,is(notNullValue()));
+		
+		hello.print();
+		assertThat(printer.toString(), is("Hello Child"));
 	}
-	
-	
+
+
 
 }

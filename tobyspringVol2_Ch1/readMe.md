@@ -30,7 +30,9 @@
   - BeanDefinition 인터페이스로 표현되는 순수한 추상정보
   - Ioc 컨테이너, 즉 application context는 BeanDefinition으로 만들어진 메타정보를 담은 오브젝트를 사용해서 IoC와 DI작업을 수행한다.
   
- 
+ 3. 스프링의 context?
+  - 어떤 객체를 핸들링하기 위한 접근 수단
+     예 ) print를 하기 위해서는 printContext를 사용해야하고 Servlet을 수행하기 위해서는 Servlet Context를 사용해야함.
       
    
  

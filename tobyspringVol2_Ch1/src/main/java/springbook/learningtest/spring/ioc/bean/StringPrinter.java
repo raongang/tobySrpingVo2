@@ -16,5 +16,7 @@ public class StringPrinter implements Printer{
 		// TODO Auto-generated method stub
 		return this.buffer.toString();
 	}
+	
+	
 
 }
