@@ -100,7 +100,6 @@ public class ApplicationContextTest {
 		
 		Hello hello = ac.getBean("hello",Hello.class);
 		hello.print();
-		
 		assertThat(ac.getBean("printer").toString(),is("Hello Spring"));
 	}
 	
@@ -186,6 +185,5 @@ public class ApplicationContextTest {
 		//나머지 메타 정보의 설정정보가 전부 default scope 적용 - 싱글톤
 		assertThat(config.annotatedHello(),is(sameInstance(hello)));
 	}
-	
 	
 }
