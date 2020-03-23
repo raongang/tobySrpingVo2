@@ -34,5 +34,28 @@
   - 어떤 객체를 핸들링하기 위한 접근 수단
      예 ) print를 하기 위해서는 printContext를 사용해야하고 Servlet을 수행하기 위해서는 Servlet Context를 사용해야함.
       
+ 4. Webapplication의 IoC Container 구성
+    - web.xml 참고
+    - root application context , servlet application context 
+ 
    
+ 5. IoC/DI를 위한 빈 설정 메타정보 작성
+   - 자동인식을 위한 빈 등록 : 스테레오타입 애노테이션과 빈 스캐너
+   - 빈스캐닝을 통한 자동인식 빈 등록 기능 : 특정 애노테이션이 붙은 클래스를 자동으로 찾아서 빈으로 등록해주는 방식
+   - 빈 스캐너 
+      ㄴ 스캐닝 작업을 담당하는 오브젝트, 클래스이름의 앞글자를 소문자로 한 이름을 빈의 아이디로 사용한다.
+      ㄴ 클래스패스의 모든 클래스를 다 검색하지만 비효율적이므로, 빈으로 등록된 클래스들이 있는 패키지를 지정 해 주는 것이 좋다.
+      ㄴ 빈 스캐너에 내장된 디폴트 필터는 @Component 애노테이션 또는 @Component를 메타 애노테이션을 가진 애노테이션이 부여된 클래스.
+   - 스테레오타입 애노테이션 : @Component 를 포함해 디폴트 필터에 적용되는 애노테이션
+  
+ 5-1. 자동인식을 위한 빈 등록 방법																	
+   ㄴ XML을 이용한 빈 스캐너 등록 ( component-scan 이용 ) 
+   ㄴ 빈 스캐너를 내장한 application context 사용
+   	
+ 5-2. 자바코드에 의한 빈등록
+    ㄴ @Configuration 클래스의 @Bean 메소드
+    ㄴ @Configuration은 빈 스캐닝을 통해 자동 인식 대상이 되므로 XML이 필요없음.
+    ㄴ @Configuration의 메타 애노테이션에 @Component가 포함되어 있음.
+    
+  
  

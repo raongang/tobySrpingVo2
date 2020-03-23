@@ -25,5 +25,4 @@ public class Hello {
 		this.printer = printer;
 	}
 
-	
 }

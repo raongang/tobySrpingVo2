@@ -3,6 +3,7 @@ package springbook.learningtest.spring.ioc;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
@@ -12,14 +13,18 @@ import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import springbook.learningtest.spring.ioc.bean.Printer;
+import springbook.learningtest.spring.ioc.bean.AnnotatedHello;
+import springbook.learningtest.spring.ioc.bean.AnnotatedHelloConfig;
+import springbook.learningtest.spring.ioc.bean.AnnotatedHelloWithName;
 import springbook.learningtest.spring.ioc.bean.Hello;
+import springbook.learningtest.spring.ioc.bean.Printer;
 import springbook.learningtest.spring.ioc.bean.StringPrinter;
 
 public class ApplicationContextTest {
@@ -144,6 +149,43 @@ public class ApplicationContextTest {
 		assertThat(printer.toString(), is("Hello Child"));
 	}
 
+	//bean scanning test
+	@Test
+	public void SimpleBeanScanning() {
+		
+		/* @Component가 붙은 클래스를 스캔할 패키지를 넣어서 context를 만들어준다. 생성과 동시에 자동으로 스캔과 등록이 완료된다.
+		 *  AnnotationConfigApplicationContext - 빈 스캐너를 내장하고 있는 appalication context 구현 클래스.
+		 */
+		ApplicationContext ctx = new AnnotationConfigApplicationContext("springbook.learningtest.spring.ioc.bean");
+		
+		//자동 등록되는 빈의 아이디는 클래스 이름의 첫 글자를 소문자로 바꿔서 사용한다.
+		AnnotatedHello hello = ctx.getBean("annotatedHello", AnnotatedHello.class); 
+		
+		assertThat(hello,is(notNullValue()));
+	}
 
-
+	//bean scanning test 
+	@Test
+	public void SimpleBeanScanningWithName() {
+		ApplicationContext ctx = new AnnotationConfigApplicationContext("springbook.learningtest.spring.ioc.bean");
+		AnnotatedHelloWithName hello = ctx.getBean("myAnnotatedHello", AnnotatedHelloWithName.class); 
+		assertThat(hello,is(notNullValue()));
+	}
+	
+	//java config test
+	@Test
+	public void configurationBean() {
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AnnotatedHelloConfig.class);
+		AnnotatedHello hello = ctx.getBean("annotatedHello", AnnotatedHello.class);
+		assertThat(hello,is(notNullValue()));
+		
+		//설정을 담은 AnnotatedHelloConfig 자체도 Bean으로 등록됨.
+		AnnotatedHelloConfig config = ctx.getBean("annotatedHelloConfig",AnnotatedHelloConfig.class);
+		assertThat(config,is(notNullValue()));
+		
+		//나머지 메타 정보의 설정정보가 전부 default scope 적용 - 싱글톤
+		assertThat(config.annotatedHello(),is(sameInstance(hello)));
+	}
+	
+	
 }

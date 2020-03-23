@@ -9,5 +9,6 @@
 	</bean>
 	
 	<bean id="printer" class="springbook.learningtest.spring.ioc.bean.StringPrinter" />
+
 </beans>
 
