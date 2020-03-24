@@ -39,7 +39,7 @@
     - root application context , servlet application context 
  
    
- 5. IoC/DI를 위한 빈 설정 메타정보 작성
+ 5. IoC/DI를 위한 빈 설정 메타정보 작성 
    - 자동인식을 위한 빈 등록 : 스테레오타입 애노테이션과 빈 스캐너
    - 빈스캐닝을 통한 자동인식 빈 등록 기능 : 특정 애노테이션이 붙은 클래스를 자동으로 찾아서 빈으로 등록해주는 방식
    - 빈 스캐너 
@@ -57,5 +57,24 @@
     ㄴ @Configuration은 빈 스캐닝을 통해 자동 인식 대상이 되므로 XML이 필요없음.
     ㄴ @Configuration의 메타 애노테이션에 @Component가 포함되어 있음.
     
-  
  
+ 6. 빈 의존관계 설정 방법
+   6-1. XML <property> , <constructor-arg> 
+   6-2. XML 자동와이어링 ( byName , byType ) 
+   6-3. 애노테이션 ( @Resource,
+     6-3-1. @Resource
+        - 자바클래스의 수정자뿐만 아니라 필드에도 붙일 수 있음. ( 필드 주입을 할경우 setter는 필요없지만, 만약 setter를 넣게 되면 값 대입 외 다른 조작행위를 하면 안된다.)
+        - XML대신 <property>와 같은 역할을 하는 애노테이션 
+        - XML에 bean을 생성하고, 다음 3가지 설정중 하나를 선택해야 함
+          ( <context:annotation-config /> , <context:component-scan /> , AnnotationConfigApplicationContext 또는 AnnotationConfigWebApplicationContext )
+        - 이름으로 검색, 없을 경우 type을 검색하고 없을 경우 exception 발생.  
+        
+     6-3-2. @Autowired / @Inject    
+        - 기본적으로 type에 의한 자동와이어링 방식으로 동작.
+        - @Autowired 
+           ㄴ 스프링 2.5부터 적용
+           ㄴ 생성자, 필드, 수정자메소드, 일반메소드 네가지로 확장한 것이다.
+          ㄴ 수정자 메소드와 필드일 경우에는, 이름 대신 필드나 프로퍼티 타입을 이용해 후보 빈을 찾는다.
+           
+        - @Inject
+           ㄴ JavaEE6의 표준 스펙 JSR-330 정의.

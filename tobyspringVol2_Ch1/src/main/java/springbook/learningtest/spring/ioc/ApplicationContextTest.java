@@ -38,7 +38,6 @@ public class ApplicationContextTest {
 	
 	@Test
 	public void registerBean() {
-
 		//IoC container 생성과 동시에 컨테이너로 동작. StaticApplicationContext -> ApplicationContext 구현 클래스.
 		StaticApplicationContext ac = new StaticApplicationContext();
 		//Hello 클래스를 hello1이라는 이름의 싱글톤 빈으로 컨테이너에 등록한다.
@@ -64,7 +63,6 @@ public class ApplicationContextTest {
 		
 		//bean은 오브젝트 단위로 등록되고 만들어지기 때문에, 같은 클래스 타입이라고 할지라도 두개를 등록하면 서로 다른 빈 오브젝트가 생성된다.
 		assertThat(hello1,is(not(hello2)));
-		
 		assertThat(ac.getBeanFactory().getBeanDefinitionCount(),is(2));  
 	}
 	
@@ -115,11 +113,20 @@ public class ApplicationContextTest {
 		assertThat(ac.getBean("printer").toString(),is("Hello Spring"));
 	}
 	
+	//test @Resource Annotation.
+	@Test
+	public void AnnotationResource() {
+		GenericApplicationContext ac = new GenericXmlApplicationContext(basePath + "genericApplicationContext.xml");
+		Hello hello = ac.getBean("hello",Hello.class);
+		hello.show();
+		assertThat(hello,is(notNullValue()));
+	}
 	
 	@Test(expected=BeanCreationException.class) //JUnit4 기능.
 	public void createContextWithoutParent() {
 		ApplicationContext child = new GenericXmlApplicationContext(basePath + "childContext.xml");
 	}
+	
 	
 	
 	//컨텍스트 계층구조 테스트.
@@ -185,5 +192,4 @@ public class ApplicationContextTest {
 		//나머지 메타 정보의 설정정보가 전부 default scope 적용 - 싱글톤
 		assertThat(config.annotatedHello(),is(sameInstance(hello)));
 	}
-	
 }

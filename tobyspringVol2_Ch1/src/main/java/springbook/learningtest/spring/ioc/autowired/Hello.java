@@ -1,14 +1,18 @@
-package springbook.learningtest.spring.ioc.bean;
+package springbook.learningtest.spring.ioc.autowired;
 
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 //pojo
 // Hello는 Printer Interface에 의존.
 public class Hello {
 	
 	String name;
+	
+	
+	//필드나 프로퍼티 타입을 이용해서 찾는다.
+	@Autowired
 	Printer printer;
-	Show show;
+	
 	
 	public String sayHello() {
 		return "Hello " + name; //->프로퍼티로 DI받은 이름을 이용
@@ -27,23 +31,7 @@ public class Hello {
 	public void setPrinter(Printer printer) {
 		this.printer = printer;
 	}
-	
-	/*
-       XML 대신 애노테이션으로 빈의 의존관계를 설정하는 법  
-     - xml의 <property name="show" ref="show" />와 동일한 의존관계 메타정보로 변환됨.
-     - 주입할 빈을 id로 받음.
-     -  bean id가 show인 부분을 주입해준다. property는 메소드이름으로부터 끌어냄.
-	 */
-	
-    @Resource(name="show")
-	public void setShow(Show show) {
-		this.show = show;
-	}
-    
-    public void show() {
-    	this.show.show("show 출력");
-    }
-    
+
     
     
 }

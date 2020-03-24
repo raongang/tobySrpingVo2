@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- Hello에 property로 show가 없어도 @Resouece(name="show") 애노테이션설정으로 주입
+	     bean 등록을 자동으로 해주지 않기 때문에 bean은 따로 설정해야 함.
+	     bean 등록을 자동으로 하고 싶다면 <context:component-scan /> 으로 작성. 
+	 -->
+	<context:annotation-config />
+	<bean id="show" class="springbook.learningtest.spring.ioc.bean.ConsoleShow" />
 
 	<bean id="hello" class="springbook.learningtest.spring.ioc.bean.Hello">
 		<property name="name" value="Spring" />
@@ -9,6 +18,8 @@
 	</bean>
 	
 	<bean id="printer" class="springbook.learningtest.spring.ioc.bean.StringPrinter" />
+	
+	
 
 </beans>
 
