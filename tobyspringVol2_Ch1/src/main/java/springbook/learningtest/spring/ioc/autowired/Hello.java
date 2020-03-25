@@ -1,18 +1,11 @@
 package springbook.learningtest.spring.ioc.autowired;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 //pojo
 // Hello는 Printer Interface에 의존.
 public class Hello {
 	
 	String name;
-	
-	
-	//필드나 프로퍼티 타입을 이용해서 찾는다.
-	@Autowired
 	Printer printer;
-	
 	
 	public String sayHello() {
 		return "Hello " + name; //->프로퍼티로 DI받은 이름을 이용

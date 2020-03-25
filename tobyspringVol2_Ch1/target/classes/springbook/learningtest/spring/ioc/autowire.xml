@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	default-autowire="byName"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-
-	<bean id="hello" class="springbook.learningtest.spring.ioc.bean.Hello">
+	<!--  
+		XML 자동와이어링 - hello bean의 printer 프로퍼티 삭제. 
+		<bean id="hello" class="springbook.learningtest.spring.ioc.autowired.Hello" autowire="byName" >
+			<property name="name" value="spring" />
+		</bean>
+	-->
+	 
+	<bean id="hello" class="springbook.learningtest.spring.ioc.autowired.Hello">
 		<property name="name" value="spring" />
-		
 	</bean>
+	 
 	
-	<bean id="printer" class="springbook.learningtest.spring.ioc.bean.StringPrinter" />
-
+	<!-- byName  
+	<bean id="printer" class="springbook.learningtest.spring.ioc.autowired.StringPrinter" />
+	-->
+	
+	<!-- by Type --> 
+	<bean id="consolePrinter" class="springbook.learningtest.spring.ioc.autowired.ConsolePrinter" />
+	
+	
 </beans>

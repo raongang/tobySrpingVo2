@@ -1,5 +1,6 @@
 package springbook.learningtest.spring.ioc;
 
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -112,22 +113,10 @@ public class ApplicationContextTest {
 		
 		assertThat(ac.getBean("printer").toString(),is("Hello Spring"));
 	}
-	
-	//test @Resource Annotation.
-	@Test
-	public void AnnotationResource() {
-		GenericApplicationContext ac = new GenericXmlApplicationContext(basePath + "genericApplicationContext.xml");
-		Hello hello = ac.getBean("hello",Hello.class);
-		hello.show();
-		assertThat(hello,is(notNullValue()));
-	}
-	
 	@Test(expected=BeanCreationException.class) //JUnit4 기능.
 	public void createContextWithoutParent() {
 		ApplicationContext child = new GenericXmlApplicationContext(basePath + "childContext.xml");
 	}
-	
-	
 	
 	//컨텍스트 계층구조 테스트.
 	@Test
@@ -146,7 +135,6 @@ public class ApplicationContextTest {
 		
 		Printer printer = child.getBean("printer", Printer.class);
 		assertThat(printer,is(notNullValue()));
-		
 		
 		Hello hello = child.getBean("hello",Hello.class);
 		assertThat(hello,is(notNullValue()));
@@ -178,7 +166,7 @@ public class ApplicationContextTest {
 		assertThat(hello,is(notNullValue()));
 	}
 	
-	//java config test
+	//java config testss
 	@Test
 	public void configurationBean() {
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AnnotatedHelloConfig.class);
@@ -192,4 +180,24 @@ public class ApplicationContextTest {
 		//나머지 메타 정보의 설정정보가 전부 default scope 적용 - 싱글톤
 		assertThat(config.annotatedHello(),is(sameInstance(hello)));
 	}
+	
+	//test @Resource Annotation.
+	@Test
+	public void AnnotationResource() {
+		GenericApplicationContext ac = new GenericXmlApplicationContext(basePath + "genericApplicationContext.xml");
+		Hello hello = ac.getBean("hello",Hello.class);
+		hello.show();
+		assertThat(hello,is(notNullValue()));
+	}	
+	
+	// @Autowried
+	@Test
+	public void autowireAnnotation() {
+		ApplicationContext ac = new GenericXmlApplicationContext(basePath + "autowireAnnotation.xml");
+		Hello hello = ac.getBean("hello",Hello.class);
+		hello.print();
+		ac.getBean("consolePrinter").toString();
+	}
+	
+	
 }
