@@ -12,12 +12,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class Hello {
 
-	@Value("Spring")
+	/* <property .. value="Spring" /> 과 동일. XML에서 쓰는걸 추천.
+	   주요 용도는 자바코드 외부의 리소스나 환경정보에 담긴 값을 사용하도록 지정해주는 것.
+	*/
+	@Value("Spring") 
 	String name;
 	
 	/* @Autowired - 이름 대신 필드나 프로퍼티 타입을 이용해서 후보 빈을 찾는다. 
-	 * XML의 자동 와이어링(byType)과 비슷. 
-	 * 
+	 * XML의 자동 와이어링(byType)과 비슷.
+	 *            - 어노테이션을 통한 의존관계 설정은 빈 오브젝트 등록을 마친 후에 후처리기에 의해 별도의 작업으로 진행된다.
 	 * 필드의 타입이 Printer이므로 현재 등록된 bean중에서(autowireAnnotation.xml) 
 	 * 
 	 * (required=false)

@@ -10,6 +10,7 @@
 	     bean 등록을 자동으로 하고 싶다면 <context:component-scan /> 으로 작성. 
 	 -->
 	<context:annotation-config />
+	
 	<bean id="show" class="springbook.learningtest.spring.ioc.bean.ConsoleShow" />
 
 	<bean id="hello" class="springbook.learningtest.spring.ioc.bean.Hello">
@@ -19,7 +20,5 @@
 	
 	<bean id="printer" class="springbook.learningtest.spring.ioc.bean.StringPrinter" />
 	
-	
-
 </beans>
 

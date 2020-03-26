@@ -1,5 +1,7 @@
 package springbook.learningtest.spring.ioc.autowired;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 //pojo
 // Hello는 Printer Interface에 의존.
 public class Hello {
@@ -25,6 +27,9 @@ public class Hello {
 		this.printer = printer;
 	}
 
-    
+	public Printer getPrinter() {
+		return printer;
+	}
+
     
 }

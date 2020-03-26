@@ -13,17 +13,17 @@
 		</bean>
 	-->
 	 
-	<bean id="hello" class="springbook.learningtest.spring.ioc.autowired.Hello">
+	<bean id="hello" class="springbook.learningtest.spring.ioc.autowired.Hello" autowire="byType">
 		<property name="name" value="spring" />
 	</bean>
 	 
-	
 	<!-- byName  
 	<bean id="printer" class="springbook.learningtest.spring.ioc.autowired.StringPrinter" />
 	-->
 	
 	<!-- by Type --> 
 	<bean id="consolePrinter" class="springbook.learningtest.spring.ioc.autowired.ConsolePrinter" />
+	
 	
 	
 </beans>

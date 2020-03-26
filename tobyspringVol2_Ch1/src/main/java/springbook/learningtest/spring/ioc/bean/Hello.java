@@ -28,14 +28,18 @@ public class Hello {
 		this.printer = printer;
 	}
 	
+    public Printer getPrinter() {
+		return printer;
+	}
+	
 	/*
        XML 대신 애노테이션으로 빈의 의존관계를 설정하는 법  
      - xml의 <property name="show" ref="show" />와 동일한 의존관계 메타정보로 변환됨.
      - 주입할 빈을 id로 받음.
      -  bean id가 show인 부분을 주입해준다. property는 메소드이름으로부터 끌어냄.
 	 */
-	
-    @Resource(name="show")
+
+	@Resource(name="show")
 	public void setShow(Show show) {
 		this.show = show;
 	}

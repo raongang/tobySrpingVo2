@@ -43,8 +43,7 @@ public class AutowiredAnnotationTest {
 	 *  애노테이션 설정을 위한 단위테스트 모듈
 	 *    - 매번 XML에 설정이나 스캐닝을 하기 위해서는 매번 설정 및 패키지를 생성해서 만들어야 하는 불편함이 있다.
 	 *    - Junit 테스트안에서 바로 테스트 할수 있는 샘플을 이용하는게 편함.
-	 *    - 빈 스캐너를 내장하고 있는 appalication context 구현 클래스.
-	 *    - 등록할 클래스를 직접 지정할 수 있음.
+	 *    - AnnotationConfigApplicationContext : 빈 스캐너를 내장하고 있는 appalication context 구현 클래스, 등록할 클래스를 직접 지정할 수 있음.
 	 */
 	@Test
 	public void atQualifier() {

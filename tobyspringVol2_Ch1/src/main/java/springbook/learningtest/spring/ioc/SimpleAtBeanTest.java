@@ -25,7 +25,7 @@ public class SimpleAtBeanTest {
 	public void simpleAutowired() {
 		
 		/*  AnnotationConfigApplicationContext - 빈 스캐너를 내장하고 있는 appalication context 구현 클래스.
-		 *                                     - 등록한 빈 클래스를 직접 지정 할 수 있음.
+		 *                                     - 등록할 빈 클래스를 직접 지정 할 수 있음.
 		 */
 		AbstractApplicationContext ac = new AnnotationConfigApplicationContext(BeanA.class,BeanB.class);
 			
@@ -35,11 +35,16 @@ public class SimpleAtBeanTest {
 		BeanB beanB = ac.getBean(BeanB.class);
 		assertThat(beanB,is(notNullValue()));
 		
-		//@Autowired 있어야 함.
+		//@Autowired 설정 있어야 함.
 		assertThat(beanA.beanB, is(notNullValue()));
 
 	}//test
 	
+	/*
+		bean으로 등록할 애노테이션 설정을 가진 클래스를 static 클래스로 정의한다.
+		빈 스캔을 할 것이 아니기 때문에, 자동등록되는 클래스라 하더라도 @Component를 붙여 줄 필요는 없다.
+		빈의 이름을 지정할 필요가 있다면 @Component("beanname")이나 @Named("beanname") 사용.
+	*/
 	private static class BeanA{ @Autowired BeanB beanB; }	
 	private static class BeanB{}
 	
