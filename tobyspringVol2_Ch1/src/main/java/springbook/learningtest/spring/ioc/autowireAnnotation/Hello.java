@@ -25,7 +25,7 @@ public class Hello {
 	 * 
 	 * (required=false)
 	 *  -bean을 못 찾을 경우 error가 발생하는데 못 찾더라도 상관없다면 required 로 설정.
-	 * 
+	 *  - @Autowired 적용을 위해서는 autowireAnnotation.xml 참고. 
 	 */
 	@Autowired(required=false)
 	@Qualifier("stringPrinter") //type이 여러 개 일 경우 지정
