@@ -51,8 +51,7 @@ public class SimpleAtBeanTest {
 	 *   ※ 필드에 @Autowired가 붙어 있음
 	 *   - 필드나 프로퍼티 타입으로 di를 해주는데, 현재 등록된 Bean중에서 BeanB Type에 대입이 가능한 빈을 찾는다.
 	 *   - AnnotationConfigApplicationContext에서 BeanB를 등록하였기 때문에, BeanB가 @Autowired에 의해 di됨.
-	 *  
-	 *
+	 * 
 	 */
 	private static class BeanA{ @Autowired BeanB beanB; }	
 	private static class BeanB{}

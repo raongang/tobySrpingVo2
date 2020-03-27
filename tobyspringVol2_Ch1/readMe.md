@@ -91,6 +91,29 @@
   7-1. 메타정보 종류에 따른 값 설정방법
        ● XML:<property>와 전용태그
        ● 애노테이션 : @Value
+         - static final로 초기화를 하지 않고 자바코드의 외부의 리소스나 환경정보에 담긴 값을 사용하도록 지정 해주는 게 주요 용도.
+            1. 매번 환경이 달라 질수 있는 값 ( ex. DataSource ) 
+               └ 환경에 의존적인 정보이거나 작업에 대한 타임아웃처럼 상황에 따라 달라질 수 있는 값 ( ex. 파일경로 ) 
+            2. 특별한 경우, 예를 들면 테스트나 특별한 이벤트 때는 초기값 대신 다른 값을 이용할 수 있음.
        ● 자바코드 : @Value
+          1. @Configuration, @Bean을 사용하는 경우에도 프로퍼티값을 외부로 독립 시킬 수 있다.
+          
+
+8. PropertyEditor 와 ConversionService
+ - @Value , XML의 value attribute는 String외 타입에 대해서는 타입을 변경하기 위한 두 가지 종류의 타입변환 서비스를 제공한다.
+ 8-1. PropertyEditor 
+    - java.beans 구현
+    - 자바빈에서 차용하여 스프링에서 제공되는 default로 사용되는 타입 변환기
+   
+ 8-2. ConversionService 
+    - Spring3.0부터 나옴.
+    - 스프링에서 직접 제공하는 타입변환 API.
+    - PropertyEditor와 달리 멀티 스레드 환경에서 공유해서 사용할 수 있다.
+    
+9. 컬렉션
+  - @Value나 value attribute로 단순 오브젝트 및 일부 타입의 배열을 전달가능.
+  - 컬렉션 타입으로 값을 넣기 위해서는 컬렉션 선언용 태그를 이용해야 한다.(<property>의 value attribte가 생략됨)
+  - Collection.xml 참고.
+  
        
       
