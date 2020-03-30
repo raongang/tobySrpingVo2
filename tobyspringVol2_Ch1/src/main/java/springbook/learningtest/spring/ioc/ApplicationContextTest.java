@@ -9,6 +9,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.RootBeanDefinition;

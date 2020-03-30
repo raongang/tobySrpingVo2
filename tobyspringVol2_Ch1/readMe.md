@@ -125,7 +125,22 @@
   
   
 10. Container(컨테이너)가 자동등록하는 빈 
-  - ApplicationContext, BeanFactory
+  10-1 ApplicationContext, BeanFactory
+  10-2 ResouceLoader, ApplicationEventPublisher
+  10-3 systemProperties, systemEnvironment (
+      - type이 아닌 name으로 접근할 수 있음.
+      - systemProperties는 Properties 타입
+      - systemEnvironment는 Map타입
       
-       
+11. 프로토타입과 스코프
+  - 기본적으로 스프링의 빈은 싱글톤으로 생성됨
+  - application context마다 bean의 오브젝트는 한개만 만들어진다.
+  11-1. 싱글톤이 아닌 빈
+      - 프로토타입 빈과 스코프 빈 
+      
+  11-2. scope 의 정의
+       - 존재할 수 있는 범위.
+             
+      
+    
       
