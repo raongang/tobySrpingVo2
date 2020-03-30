@@ -111,7 +111,6 @@ public class ValueAnnotationTest {
 		
 		assertThat((String)bean.settings.get("username"),is("Spring"));
 		assertThat((String)bean.settings.get("password"),is("Book"));
-		
 		assertThat(bean.beans.size(),is(2));
 		
 	}
@@ -128,6 +127,7 @@ public class ValueAnnotationTest {
 		public void setAges(Map<String, Integer> ages) { this.ages = ages; }
 		public void setSettings(Properties properties) { this.settings = properties; }
 		public void setBeans(List beans) { this.beans = beans; }
-		
 	}
+	
+	
 }
