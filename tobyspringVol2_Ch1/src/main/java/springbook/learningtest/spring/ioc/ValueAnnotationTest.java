@@ -92,9 +92,7 @@ public class ValueAnnotationTest {
 	@Test
 	public void collectionInject() {
 		
-		
-		
-		ApplicationContext ac = new GenericXmlApplicationContext(new ClassPathResource("collection.xml",getClass()));
+		ApplicationContext ac = new GenericXmlApplicationContext(new ClassPathResource("collection.xml",getClass())); //??
 		
 		BeanC bean = ac.getBean(BeanC.class);
 		
