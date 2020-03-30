@@ -1,5 +1,13 @@
 
 ※ 프로젝트 설명 : IoC 컨테이너와 DI
+
+ 0 컨테이너의 개념 
+   - 사전적 의미로는 무언가를 담는 용기, 그릇을 의미
+   - 객체관리를 주로 수행하는 그릇 정도로 이해
+   - 빈의 생성과 관계,사용,생명주기등을 관장한다.
+   - 종류 : BeanFactory ,ApplicationContext 
+   - 이는 곧, 1의 IoC컨테이너로 같이 생각해도 무방함.
+ 
  1 IoC컨테이너 : bean Factory 와 application Context 
    - 스프링 애플리케이션에서 오브젝트의 생성과 관계설정, 사용, 제거 등의 작업을 애플리케이션 코드 대신 독립된 컨테이너가 담당
    - 컨테이너가 코드 대신 오브젝트에 대한 제어권을 가지고 있다고 해서 IoC라고 부름
@@ -115,5 +123,9 @@
   - 컬렉션 타입으로 값을 넣기 위해서는 컬렉션 선언용 태그를 이용해야 한다.(<property>의 value attribte가 생략됨)
   - Collection.xml 참고.
   
+  
+10. Container(컨테이너)가 자동등록하는 빈 
+  - ApplicationContext, BeanFactory
+      
        
       
