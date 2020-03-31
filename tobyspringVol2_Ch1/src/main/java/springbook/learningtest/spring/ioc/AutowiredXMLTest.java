@@ -24,7 +24,6 @@ public class AutowiredXMLTest {
 		assertThat(ac.getBean("printer").toString(),is("Hello spring"));
 	}
 	
-	
 	//Auto wire - byType
 	@Test
 	public void autowireByType() {
@@ -33,4 +32,5 @@ public class AutowiredXMLTest {
 		hello.print();
 		ac.getBean("consolePrinter").toString();
 	}
+	
 }

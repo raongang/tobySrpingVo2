@@ -21,4 +21,5 @@
 	<bean id="printer" class="springbook.learningtest.spring.ioc.resource.ConsolePrinter" />
 	-->
 
+		
 </beans>

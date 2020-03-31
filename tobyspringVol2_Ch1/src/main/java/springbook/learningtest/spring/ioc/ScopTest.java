@@ -13,7 +13,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Scope;
 
 public class ScopTest {
-
 	
 	/*
 	 *  싱글톤 스코프는 컨텍스트당 한개의 오브젝트만 만들어진다.  
@@ -38,7 +37,6 @@ public class ScopTest {
 		beans.add(ac.getBean(SingletonClientBean.class).bean1);
 		beans.add(ac.getBean(SingletonClientBean.class).bean2);
 		assertThat(beans.size(),is(1));
-		
 	}
 	
 	//싱글톤 스코프 빈. Scope 빈 메타정보의 디폴트 값은 "singleton"이기 때문에 별도의 스코프 설정은 필요없음.
@@ -78,7 +76,5 @@ public class ScopTest {
 		@Autowired PrototypeBean bean1;
 		@Autowired PrototypeBean bean2;
 	}
-	
-	
 }
 
