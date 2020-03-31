@@ -21,7 +21,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 public class FactoryBeanTest {
- 
 	@Autowired
 	ApplicationContext context;
 	
@@ -37,7 +36,6 @@ public class FactoryBeanTest {
 		Object factory = context.getBean("&message");
 		//assertThat(factory,is(MessageFactoryBean.class));
 	}
-	
 }
 
 

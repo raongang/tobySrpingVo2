@@ -10,6 +10,7 @@ import springbook.learningtest.spring.ioc.bean.StringPrinter;
 //@Bean 메소드의 의존관계와 싱글톤 
 //자바코드로 표현되는 메타정보.
 //자동인식 빈의 대상이 되므로 XML이 필요없다.
+//@Configuration 애노테이션은 자기자신도 빈으로 등록되면서 동시에 @Bean이 붙은 메소드의 리턴오브젝트도 빈으로 등록해준다.
 @Configuration
 public class HelloConfig {
 	
@@ -19,7 +20,7 @@ public class HelloConfig {
 		Hello hello = new Hello();
 		hello.setName("Spring");
 		hello.setPrinter(printer()); //수동 DI
-		return hello;
+		return hello; 
 	}
 	
 	@Bean 

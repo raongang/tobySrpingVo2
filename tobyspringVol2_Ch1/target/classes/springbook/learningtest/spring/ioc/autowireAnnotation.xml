@@ -20,6 +20,12 @@
 		- CommonAnnotationBeanPostProcessor: @Ressource, @PostConstruct, @PreDestroy 어노테이션 처리
 		- ConfigurationClassProcessor: @Configuration 어노테이션 처리
 	 -->
+	 
+	 <!-- <context:component-scan /> 태그.
+	     - 
+	 
+	 
+	  -->
 	<context:component-scan base-package="springbook.learningtest.spring.ioc.autowireAnnotation" />
 
 </beans>
