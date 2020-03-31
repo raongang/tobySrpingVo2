@@ -199,5 +199,6 @@ public class ApplicationContextTest {
 		hello.print();
 		ac.getBean("consolePrinter").toString();
 	}
+
 	
 }

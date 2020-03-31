@@ -12,8 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
-
-
 /**
  * 
  * @author raongang 
@@ -36,8 +34,6 @@ public class SimpleAtBeanTest {
 		assertThat(beanB,is(notNullValue()));
 		
 		//@Autowired 설정 있어야 함.
-		
-		
 		assertThat(beanA.beanB, is(notNullValue()));
 
 	}//test
@@ -56,6 +52,4 @@ public class SimpleAtBeanTest {
 	private static class BeanA{ @Autowired BeanB beanB; }	
 	private static class BeanB{}
 	
-	
-
 }
