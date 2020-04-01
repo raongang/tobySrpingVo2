@@ -38,7 +38,6 @@ public class AutowiredAnnotationTest {
 		assertThat(hello.getPrinter().toString(),is("Hello Spring"));
 	}
 	
-	
 	/**
 	 *  애노테이션 설정을 위한 단위테스트 모듈
 	 *    - 매번 XML에 설정이나 스캐닝을 하기 위해서는 매번 설정 및 패키지를 생성해서 만들어야 하는 불편함이 있다.

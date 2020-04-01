@@ -27,7 +27,7 @@
   1-4. IoC컨테이너의 종류 ( ApplicationContext interface 구현 ) 
     ● StaticApplicationContext 
       - 실전에서 사용금지, 테스트용 
-    ● GeneralApplicationContext
+    ● GenericApplicationContext
       - 가장 일반적 구현클래스
     ● GeneralXmlApplicationContext
     ● WebApplicationContext 
@@ -157,6 +157,24 @@
     2) ObjectFactory, ObjectFactoryCreatingFactoryBean
     3) ServiceLocatorFactoryBean
     
+ 12. 빈의 역할과 성격에 따라
+   - 애플리케이션 빈(애플리케이션 로직 빈,애플리케이션 인프라 빈) , 인프라 빈(컨테이너 인프라 빈)
+   
+ 13. 컨테이너 인프라 빈과 전용태그
+   -> 컨테이너 인프라빈은 스프링 컨테이너의 기능을 확장해서 빈의 등록과 생성, 관계설정, 초기화 등의 작업에 참여하는 빈. 
+   
+   ※ 스프링의 IoC/DI 컨테이너에는 @Configuration/@Bean 을 이용해 새로운 빈을 등록해주는 기능이 없다.
+   @Autowired @PostConstruc같은 애노테이션을 이용한 빈 의존관계 설정 방식, 빈 초기화메소드는 모두 스프링 컨테이너가 기존적으로 제공하는 기능이 아님.
+    
+    -> 스프링 컨테이너가 확장할 수 있는 컨테이너 인프라  빈이 제공하는 기능일뿐.
+    -> 해결하기 위해서는 <context:annotation-config />를 추가.
+    
+   12-1. <context:annotation-config />
+    -> context namespace의 태그를 처리하는 핸들러를 통해 특정 빈이 등록되게 해 주고 그 과정에서 등록되는 빈이 스프링 컨테이너를 확장해서 빈의 등록과 관계설정, 후처리 등에 새로운 기능을 부여하는 컨테이너 인프라 빈임.
+    -> 스프링 Ioc/DI 컨테이너의 기능을 확장하는 방법은 확장 기능을 가진 오브젝트를 스프링의 빈으로 등록 해주는 것.
     
     
-      
+14. Web application의 새로운 IoC 컨테이너 구성
+   -
+    
+   

@@ -26,6 +26,23 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<!-- root-application context 를 java config 로 설정시  
+	     AnnotationConfigWebApplicationContext - @Configuration을 설정정보로 사용한다. 
+	                                           - XML방식일 경우에는 <context:annotation-config />이 등록해주는 빈을 기본적으로 추가 해줌.
+	     
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+			org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+		</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>myPrject.config.AppConfig</param-value>
+	</context-param>
+	-->
 
 	<!-- Processes application requests (front controller servlet)
 	    - 서블릿이 초기화 될때 자신만의 context를 생성하고 초기화함.
@@ -46,11 +63,35 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<!-- servlet-context를 java config로 설정할 경우 
+	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>
+				org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+			</param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				myproject.config.WebConfig
+			</param-value>
+		</init-param>
+	</servlet>
+	-->
+	
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	
 	
 	
 </web-app>
