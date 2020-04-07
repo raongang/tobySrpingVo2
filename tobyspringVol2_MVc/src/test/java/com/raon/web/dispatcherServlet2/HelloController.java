@@ -17,7 +17,7 @@ public class HelloController implements Controller{
 	//부모 컨텍스트인 root-context로부터 DI받음
 	@Autowired HelloSpring helloSpring;
 	
-	//handleRequest Controller Type Hanlder를 담당하는 SimpleControllerHandlingAdapter를 통해 DispatcherServlet으로부터 호출된것.
+	//handleRequest - Controller Type Hanlder를 담당하는 SimpleControllerHandlingAdapter를 통해 DispatcherServlet으로부터 호출된것.
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("test");

@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /* 테스트를 위한 dispatcherServlet 확장 
  *   - WEB-INF밑에 매번 테스트용 설정 파일을 두고 이를 web.xml에 설정해 가면서 테스트하기에는 불편.
- *   - contet 초기화 기능과 편리한 설정기능을 추가한 테스트용 dispatcherServlet 확장 클래스.
+ *   - context 초기화 기능과 편리한 설정기능을 추가한 테스트용 dispatcherServlet 확장 클래스.
  * */
 public class ConfigurableDispatcherServlet extends DispatcherServlet{
 
@@ -45,11 +45,13 @@ public class ConfigurableDispatcherServlet extends DispatcherServlet{
     public void setLocations(String ...locations) {
 		this.locations = locations;
 	}
-    
+	
+    public void setClasses(Class<?> ...classes) {
+		this.classes = classes;
+	}
     
 	//주어진 클래스로부터 상대적인 위치의 클래스에 있는 설정파일을 지정할 수 있게 해준다.
     public void setRelativeLocations(Class clazz, String ...relativeLocations) {
-    	
     	String[] locations = new String[relativeLocations.length];
     	String currentPath = ClassUtils.classPackageAsResourcePath(clazz) + "/";
     	
@@ -57,18 +59,12 @@ public class ConfigurableDispatcherServlet extends DispatcherServlet{
     		System.out.println("currentPath : " + currentPath + " \t relativeLocations[" + i + "] : " + relativeLocations[i]);
     		locations[i] = currentPath + relativeLocations[i]; 
     	}
-    	
     	this.setLocations(locations);
     }
 	
-
-	public void setClasses(Class<?> ...classes) {
-		this.classes = classes;
-	}
-	
 	public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
 		modelAndView = null;
-		super.service(req, res);
+		super.service(req, res); // 여기서 HelloController handleRequest호출됨. 
 	}
 	
 	//DispatcherServlet 의 서블릿 컨텍스트를 생성하는 메소드를 오버라이딩해서 테스트용 메타정보를 이용해서 서블릿 컨텍스트를 생성하게 함.
@@ -95,6 +91,10 @@ public class ConfigurableDispatcherServlet extends DispatcherServlet{
 		
 	}//end createWebApplicationContext
 	
+	/*
+	 *   뷰를 실행하는 과정을 가로채서 컨트롤러갸 돌려준 ModelAndView 정보를 따로 저장해준다. 테스트에서 HttpServletResponse를 확인하는 대신 
+	 *   컨트롤러가 리턴한 ModelAndView를 검증할 수 있게 해준다.
+	 * */
 	protected void render(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		this.modelAndView = mv;
 		super.render(mv, request, response);
@@ -103,5 +103,5 @@ public class ConfigurableDispatcherServlet extends DispatcherServlet{
 	public ModelAndView getModelAndView() {
 		return modelAndView;
 	}
-
+	
 }

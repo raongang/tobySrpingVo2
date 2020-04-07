@@ -33,8 +33,8 @@ public class ServletTest {
 		MockHttpServletResponse res = new MockHttpServletResponse();
 
 		SimpleGetServlet servlet = new SimpleGetServlet();
-		servlet.service(req, res);
 		servlet.init();
+		servlet.service(req, res);
 		
 		assertThat(res.getContentAsString(),is("<HTML><BODY>Hello mockParameter</BODY></HTML>"));
 		assertThat(res.getContentAsString().indexOf("Hello mockParameter") >0, is(true));

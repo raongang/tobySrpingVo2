@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/* 서블릿 구현 클래스*/
 public class SimpleGetServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
