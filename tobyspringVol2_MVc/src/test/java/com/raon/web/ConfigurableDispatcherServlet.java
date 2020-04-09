@@ -33,7 +33,9 @@ public class ConfigurableDispatcherServlet extends DispatcherServlet{
 	
 	//컨트롤러가 DispatcherServlet에 돌려주는 모델과 뷰 정보를 저장해서 테스트에서 확인할 수 있게 해준다.
 	private ModelAndView modelAndView;
-
+	
+	public ConfigurableDispatcherServlet() {}
+	
 	public ConfigurableDispatcherServlet(String[] locations) {
 		this.locations = locations;
 	}

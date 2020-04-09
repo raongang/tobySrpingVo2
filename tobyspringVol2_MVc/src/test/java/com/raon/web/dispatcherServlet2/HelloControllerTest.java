@@ -22,7 +22,6 @@ import com.raon.web.ConfigurableDispatcherServlet;
 public class HelloControllerTest {
 
 	private String basePath = StringUtils.cleanPath(ClassUtils.classPackageAsResourcePath(getClass())) + "/";
-	
 	//DispatcherServlet 테스트 ( 테스트를 위해 DispathcerServlet을 전략을 통해 확장함 ) 
 	@Test
 	public void dispatcherTest() throws ServletException, IOException {
