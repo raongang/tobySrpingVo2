@@ -83,7 +83,7 @@ public class HelloControllerTest {
 		assertThat(mav.getViewName(), is("hello"));
 		assertThat((String)mav.getModel().get("message"),is("hello Spring"));
 	}
-		
+
 	
 	
 }//end HelloControllerTest

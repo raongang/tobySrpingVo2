@@ -16,18 +16,48 @@ import com.raon.web.AbstractDispatcherServletTest;
 /*
  *  ConfigurableDispatcherServlet 와 AbstractDispatcherServletTest를 이용한 테스트.
 */
-public class SimpleHelloControllerTest extends AbstractDispatcherServletTest{
 
+public class SimpleHelloControllerTest extends AbstractDispatcherServletTest{
+	
 	@Test
 	public void helloController() throws ServletException,IOException{
+		
 		ModelAndView mav = setRelativeLocations("spring-servlet.xml")
-							.setClasses(HelloSpring.class)
+							.setClasses(HelloSpring.class) //빈등록
 							.initRequest("/hello", RequestMethod.GET).addParameter("name", "Spring")
 							.runService()
 							.getModelAndView();
 		
 		assertThat(mav.getViewName(), is("hello"));
 		assertThat((String)mav.getModel().get("message"), is("hello Spring"));
-		
 	}
-}
+	
+	
+	@Test
+	public void helloControllerWithAssertMethods() throws ServletException, IOException{
+		setRelativeLocations("spring-servlet.xml")
+		.setClasses(HelloSpring.class)
+		.initRequest("/hello", RequestMethod.GET).addParameter("name", "Spring")
+		.runService()
+		.assertModel("message", "hello Spring")
+		.assertViewName("hello");
+	}
+	
+	@Test
+	public void helloControllerWithServletPath() throws ServletException, IOException{
+		setRelativeLocations("spring-servlet.xml")
+		.setClasses(HelloSpring.class)
+		.setServletPath("/app")
+		.initRequest("/app/hello", RequestMethod.GET).addParameter("name", "Spring")
+		.runService()
+		.assertModel("message", "hello Spring")
+		.assertViewName("hello");
+	}
+	
+	
+	
+
+	
+	
+	
+}//end SimpleHelloControllerTest

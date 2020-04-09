@@ -30,5 +30,7 @@
 	테스트 url 예) http://localhost:8080/hello?name=TestFile
 	 -->	
 	<beans:bean id="/hello" class="com.raon.controller.test.HelloController" />
+
+	
 	
 </beans:beans>

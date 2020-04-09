@@ -116,7 +116,6 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 		return this;
 	}
 	
-	
 	public AfterRunService runService(String requestUri) throws ServletException, IOException {
 		initRequest(requestUri);
 		runService();
