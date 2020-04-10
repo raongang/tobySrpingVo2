@@ -53,10 +53,7 @@ public class HandlerExceptionResovler extends AbstractDispatcherServletTest {
 	}
 	
 	
-	
-	
-	
-	/** ResponseStatusExceptionResolver 예제 ㄴ*/
+	/** ResponseStatusExceptionResolver 예제 */
 	@Test
 	public void responseStatus() throws ServletException, IOException{
 		setClasses(HelloCon2.class);
@@ -64,7 +61,6 @@ public class HandlerExceptionResovler extends AbstractDispatcherServletTest {
 		System.out.println("response.getStatus() : " + response.getStatus());
 		System.out.println(response.getErrorMessage());
 	}
-	
 	
 	@RequestMapping
 	static class HelloCon2{
