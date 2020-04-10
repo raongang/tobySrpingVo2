@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<context:annotation-config />
+
+	<!-- castor : 자동으로 자바오브젝트를 xml로 변환 -->
+	<bean id="marshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
+
+	<bean id="helloMarshallingView" class="org.springframework.web.servlet.view.xml.MarshallingView" >
+		<property name="marshaller" ref="marshaller" />
+		<!-- controller에 return한 model에서 어떤 이름의 오브젝트에 marshaller를 적용할지 지정 -->
+		<property name="modelKey" value="info" />
+	</bean>
+	
+	<bean id="helloController" class="com.raon.web.view.MarshallerViewTest$HelloController" />
+
+</beans>

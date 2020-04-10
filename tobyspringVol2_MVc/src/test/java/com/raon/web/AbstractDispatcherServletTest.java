@@ -45,8 +45,17 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 		return this;
 	}
 	
+	public void print() {
+		System.out.println("AbstractDispatcherTest Print");
+	}
+	
+	//자식의 this로 들어와서 부모의 this를 반환
 	public AbstractDispatcherServletTest setRelativeLocations(String ...relativeLocations) {
+		System.out.println("==============================");
+		System.out.println(this); 
+		System.out.println("==============================");
 		this.relativeLocations = relativeLocations;
+		
 		return this;
 	}
 	
@@ -56,7 +65,6 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 	}
 	
 	public AbstractDispatcherServletTest setServletPath(String servletPath) {
-		System.out.println("setServletPath Start!!");
 		if (this.request == null)
 			this.servletPath = servletPath;
 		else
@@ -113,6 +121,9 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 		if (this.request == null) 
 			throw new IllegalStateException("request가 준비되지 않았습니다");
 		this.dispatcherServlet.service(this.request, this.response);
+	
+		System.out.println("this >> " + this);
+		
 		return this;
 	}
 	

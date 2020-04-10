@@ -121,5 +121,70 @@
       - 핸들러 인터셉터 자체가 bean
       - HttpServletRequest,HttpServletResponse, 실행될 컨트롤러 빈 오브젝트, 컨트롤러가 돌려주는 ModelAndView, 발생한 예외등을 제공받을 수 있기 때문에 서블릿필터보다 훨씬 정교하고 편함.               
 
-		      
+ 3.4 뷰 
+  컨트롤러가 작업을 마친후 뷰정보를 ModelAndView 타입 오브젝트에 담아서 DispatcherServlet에 돌려주는 방법2가지
+    - View 타입의 오브젝트 반환
+    - 뷰 이름 반환(뷰 이름으로부터 실제 사용할 뷰를 결정해주는 view resolver 필요하며 디폴트로 등록된 뷰리졸버(InternalResourceViewResolver)를 사용한다.) 
+  
+  3.4.1 뷰 사용방법
+    - 스프링이 제공하는 기반 뷰 클래스를 확장해서 코드로 뷰를 만듬
+    - 스프링이 제공하는 뷰를 사용하되 뷰 클래스 자체를 상속하거나 코드를 작성하지 않고, JSP나 프리마커 같은 템플릿 파일을 사용하거나
+      모델을 자동으로 뷰로 전환하는 로직을 적용하는 방법
+      
+    - 스프링의 view 구현 클래스는 모두 멀티스레드에서 공유가능하니 싱글톤 빈으로 등록해서 사용해도 된다.
+
+    ● InternalResourceView (DEFAULT)
+     - UrlBasedViewResolver의 서브클래스
+     - JSTL 라이브러리가 존재하지 않을 경우
+     - RequestDispatcher의 forward()나 include()를 이용.
+     - Controller가 돌려준 뷰이름을 포워딩할 jsp의 이름으로 사용하고 모델정보를 요청 attribute에 넣어주는 작업을 InternalResourceView와 DispatcherServlet이 대신함.
+
+    ● JstlView (DEFAULT)
+     - Jstl로 기술한 JSP를 표시할 경우 사용.
+     - InternalResourceView 을 상속한 View 클래스
+     
+	● InternalResourceViewResolver
+	 - InternalResourceView와 JstlView를 이용하기 위한 View Resolver
+	 
+	● RedirectView 
+	 - HttpServletResponse의 sendRedirect()를 호출해주는 기능을 가진 view
+	 - 실제 View가 생성되는게 아니라 url만 만들어져 다른 페이지로 리다이렉트 된다.
+	 
+	● VelocityView, FreeMarkerView
+	 
+	● MarshallingView
+	  - spring 3.0에 새롭게 등장한 OXM(object-XML Mapping) 추상화 기능을 활용해서 application/xml 타입의 XML콘텐트를 작성하게 해줌.
+	  	   
+	● AbstractExcelView, AbstractJExcelView, AbstractPdfView
+	  - 엑셀과 pdf를 만들어 주는 view
+      - AbstractExcelView : Apache POI 라이브러리를 이용해 엑셀 뷰 생성
+      - AbstractJExcelView : JExcelAPI 이용 엑셀 문서 생성
+      - AbstractPdfView : iText 프레임워크 API로 PDF문서를 생성해줌.
+      
+	● TilesView
+	
+	● MappingJacksonJsonView
+	  - Ajax에서 많이 사용되는 JSON 타입의 콘텐트를 작성해주는 뷰.
+	  - 모델의 모든 오브젝트를 JSON으로 변환한다.
+	  - 
+	
+  3.4.2 뷰 리졸버
+     - HandlerMapping이 요청 URL로부터 컨트롤러를 찾아주는 것처럼, 뷰 이름으로부터 사용할 뷰 오브젝트를 찾아준다.
+     - 뷰 리졸버는 ViewResolver인터페이스를 구현해서 만든다.
+     - 뷰 리졸버를 여러 개 빈으로 등록해서 이용할 경우에는 order 프로퍼티를 이용해서 적용 순서 지정 가능.
+ 
+ 	● InternalResourceViewResolver
+ 	 - order 프로퍼티에는 기본적으로 Integer.MAX값이 있어서 order를 지정하지 않아도 제일 마지막에 사용된다.
+ 	 
+ 	● VelocityViewResolver, FreeMarkerViewResolver
+	 	      
+ 3.5 기타 전략
+   3.5.1 핸들러 예외 리졸버(HandlerExceptionResolver)
+    - 총4개의 HandlerExceptionResolver 구현 전략을 제공하며 3개는 디폴트로 설정되어 있음.
+    
+ 	● AnnotationMethodHandlerExceptionResolver
+ 	  - 예외가 발생한 컨트롤러 내의 메소드중에서 @ExceptionHandler 애노테이션이 붙은 메소드를 찾아 예외처리를 맡겨주는 핸들러 예외 리졸버
+ 	  - Spring3.0에 새로 추가
+ 	● ResponseStatusExceptionResolver
+     
       

@@ -23,7 +23,6 @@ public class HelloController implements Controller{
 		System.out.println("test");
 		// TODO Auto-generated method stub
 		String name = request.getParameter("name");
-		
 		System.out.println("name : " + name);
 		
 		String message = this.helloSpring.sayHello(name);
@@ -34,5 +33,4 @@ public class HelloController implements Controller{
 		//return new ModelAndView("/WEB-INF/view/hello",model);
 		return new ModelAndView("hello",model);
 	}
-
 }
