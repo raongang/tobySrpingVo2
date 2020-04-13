@@ -20,7 +20,6 @@ import com.raon.web.AbstractDispatcherServletTest;
 /** 
  * javax.servlet.Servlet을 구현한 서블릿 클래스도 스프링MVC의 controller로 사용될 수 있음
  *  servlet 구현 클래스를 controller로 사용하고 테스트하는 예제.
- *  
  *  servlet controller와 SimpleServletHandlerAdapter를 이용한 샘플.
  *   
 */
@@ -53,5 +52,6 @@ public class ServletControllerTest extends AbstractDispatcherServletTest{
 			resp.getWriter().print("test " + name);
 		}
 	}//end HelloServlet
+	
 	
 }//end ServletControllerTest

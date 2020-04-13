@@ -167,6 +167,8 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 
 	@Override
 	public AfterRunService assertViewName(String viewName) {
+		System.out.println("1-----------------------------");
+		System.out.println(this.getModelAndView().getViewName());
 		assertThat(this.getModelAndView().getViewName(), is(viewName));
 		return this;
 	}

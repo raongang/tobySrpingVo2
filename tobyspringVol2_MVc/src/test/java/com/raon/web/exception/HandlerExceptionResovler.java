@@ -29,7 +29,7 @@ public class HandlerExceptionResovler extends AbstractDispatcherServletTest {
 		System.out.println(getModelAndView().getModel().get("msg"));	
 	}
 	
-	@RequestMapping
+	@RequestMapping	
 	static class HelloCon{
 		@RequestMapping("/hello")
 		public void hello() {
@@ -52,7 +52,6 @@ public class HandlerExceptionResovler extends AbstractDispatcherServletTest {
 		return new ModelAndView("dataexception").addObject("msg",ex.getMessage());
 	}
 	
-	
 	/** ResponseStatusExceptionResolver 예제 */
 	@Test
 	public void responseStatus() throws ServletException, IOException{
@@ -73,5 +72,6 @@ public class HandlerExceptionResovler extends AbstractDispatcherServletTest {
 	@ResponseStatus(value=HttpStatus.SERVICE_UNAVAILABLE, reason="서비스 긴급 점검중")
 	static class NotInServiceException extends RuntimeException {
 	}
+	
 	
 }

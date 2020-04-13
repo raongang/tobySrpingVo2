@@ -53,7 +53,6 @@ public class HelloControllerTest {
 		assertThat(servlet.getServletName(),is("spring"));
 	}//dispatcherTest
 	
-	
 	/* 등록된 bean list 출력 */
 	@Test
 	public void beanDefinitionTest() {
@@ -83,7 +82,7 @@ public class HelloControllerTest {
 		assertThat(mav.getViewName(), is("hello"));
 		assertThat((String)mav.getModel().get("message"),is("hello Spring"));
 	}
+	
+	
 
-	
-	
 }//end HelloControllerTest

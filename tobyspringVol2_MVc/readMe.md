@@ -130,7 +130,6 @@
     - 스프링이 제공하는 기반 뷰 클래스를 확장해서 코드로 뷰를 만듬
     - 스프링이 제공하는 뷰를 사용하되 뷰 클래스 자체를 상속하거나 코드를 작성하지 않고, JSP나 프리마커 같은 템플릿 파일을 사용하거나
       모델을 자동으로 뷰로 전환하는 로직을 적용하는 방법
-      
     - 스프링의 view 구현 클래스는 모두 멀티스레드에서 공유가능하니 싱글톤 빈으로 등록해서 사용해도 된다.
 
     ● InternalResourceView (DEFAULT)
@@ -185,6 +184,45 @@
  	● AnnotationMethodHandlerExceptionResolver
  	  - 예외가 발생한 컨트롤러 내의 메소드중에서 @ExceptionHandler 애노테이션이 붙은 메소드를 찾아 예외처리를 맡겨주는 핸들러 예외 리졸버
  	  - Spring3.0에 새로 추가
+ 	  
  	● ResponseStatusExceptionResolver
+ 	  - 예외를 특정 Http 응답상태 코드로 전환.
+ 	  - 단점은 직접 @ResponseStatus를 붙일수 있는 예외클래스를 만들어야 한다. 따라서 기존에 정의된 예외클래스에는 바로 적용할 수 없음.
+ 	  
+ 	● DefaultHandlerExceptionResolver
+ 	  - 스프링에서 내부적으로 발생하는 주요 예외를 처리 해주는 표준예외처리 로직을 담고 있음.
+ 	  ex) NoSuchRequestHandleMethodException -> HTTP404 - Not Found 
+ 	      TypeMismatchException -> HTTP 400 - Bad Request
+ 	  - 스프링 내부에서 발생하므로 크게 신경쓰지 않아도 되지만 다른 핸들러 예외 리졸버를 빈으로 등록해서 DefaultHandlerExceptionResolver 가
+ 	    작동하지 않을 경우에는 함께 등록 해주는 것이 좋다.
+
+ 	● SimpleMappingExceptionResolver
+ 	  - web.xml의 <error-page>와 비슷하게 예외를 처리할 뷰를 지정할수 있게 해준다.
+ 	  - default전략이 아니므로 직접 빈으로 등록해야 한다.
+ 	  - 실제로 사용하기 편함.
+ 	  
+	3.5.2 지역정보 리졸버 (LocalResovler)
+	3.5.3 멀티파트 리졸버	  
+	  - 파일업로드와 같이 멀티파트 포맷의 요청정보를 처리하는 전략
+	  - Apache Commons의  FileUpload 라이브러리를 사용하는 CommonsMultipartResolver 한가지만 지원됨.
+	  - bean으로 등록해 줘야함.
+	  
+ 	● RequestToViewNameTranslator
+ 	  - 컨트롤러에서 뷰이름이나 뷰 오브젝트를 돌려주지 않았을 경우 Http요청정보를 참고하여 뷰 이름을 생성해준다.
+ 	  - 디폴트로 DefaultRequestToViewNameTranslator가 등록되어 있음.
+ 	  - URL을 기준으로 뷰 이름을 결정
+ 	    
+4. 스프링 @MVC
+ 
+	
+ 	  
+ 	 	    
+ 	    
+ 	 	  
+ 	   
+ 	  
+ 	
      
+      
+
       

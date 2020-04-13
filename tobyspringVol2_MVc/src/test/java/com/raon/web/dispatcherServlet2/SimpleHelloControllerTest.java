@@ -56,8 +56,4 @@ public class SimpleHelloControllerTest extends AbstractDispatcherServletTest{
 	
 	
 	
-
-	
-	
-	
 }//end SimpleHelloControllerTest

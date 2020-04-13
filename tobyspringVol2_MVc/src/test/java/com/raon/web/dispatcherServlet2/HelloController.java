@@ -23,11 +23,9 @@ public class HelloController implements Controller{
 		System.out.println("test");
 		// TODO Auto-generated method stub
 		String name = request.getParameter("name");
-		
 		System.out.println("name : " + name);
 		
 		String message = this.helloSpring.sayHello(name);
-		
 		Map<String,Object> model = new HashMap<String,Object>();
 		model.put("message", message);
 		
