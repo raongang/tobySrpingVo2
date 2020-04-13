@@ -32,7 +32,6 @@ public class SimpleHelloControllerTest extends AbstractDispatcherServletTest{
 		assertThat((String)mav.getModel().get("message"), is("hello Spring"));
 	}
 	
-	
 	@Test
 	public void helloControllerWithAssertMethods() throws ServletException, IOException{
 		setRelativeLocations("spring-servlet.xml")
@@ -53,7 +52,6 @@ public class SimpleHelloControllerTest extends AbstractDispatcherServletTest{
 		.assertModel("message", "hello Spring")
 		.assertViewName("hello");
 	}
-	
-	
+
 	
 }//end SimpleHelloControllerTest

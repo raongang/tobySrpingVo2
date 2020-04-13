@@ -27,7 +27,6 @@ public class ServletControllerTest extends AbstractDispatcherServletTest{
 	
 	@Test
 	public void helloServletController() throws UnsupportedEncodingException, ServletException, IOException {
-		
 		/* 
 		 *  Default BeanNamedUrlHandlerMapping 사용 및 핸들러 어앱터와 컨트롤러를 빈으로 둥록한다.
 		 *  Hanlder Adapter를 빈으로 등록시 DispatcherServlet은 이를 자동으로 감지하여 디폴트 핸들러 어댑터 대신 사용.

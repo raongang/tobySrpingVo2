@@ -83,6 +83,4 @@ public class HelloControllerTest {
 		assertThat((String)mav.getModel().get("message"),is("hello Spring"));
 	}
 	
-	
-
 }//end HelloControllerTest

@@ -72,12 +72,19 @@
        - Controller Interface를 직접 구현하는 것은 권장되지 않음
        - 적어도 웹브라우저를 클라이언트로 갖는 컨트롤러의 필수 기능이 구현되어 있는 AbstractController를 구현해서 만드는게 나음.
      
+      
     ● AnnotationMehtodHandlerAdatper
       - 지원하는 컨트롤러 타입이 정해져 있지 않다.
       - 메소드에 붙은 몇가지 애노테이션 정보와 메소드 이름, 파라미터, 리턴 타입에 대한 규칙 등을 종합적으로 분석해서 컨트롤러를 선발하고 호출 방식을 결정.
       - 컨트롤러 하나가 하나 이상의 url에 매핑될 수 있음.
       - DefaultAnnotationHandlerMapping 와 같이 사용해야 함.
       - 제일 많이 이용됨.
+      - HttpMessageConverter 타입의 메세지 변환기(message converter)가 여러개 등록되어 있음
+         └ StringHttpMessageConverter (String)
+         └ MarshallingHttpMessageConverter (XML)
+         └ MappingJacksonHttpMessageConverter (JSON)
+      
+      
       - ex) 
       @Controller
       public class HelloController{
@@ -213,7 +220,33 @@
  	  - URL을 기준으로 뷰 이름을 결정
  	    
 4. 스프링 @MVC
- 
+    AnnotationMethodHandlerAdapter 가 호출하는 @Controller 메소드의 사용가능한 파라미터 타입과 애노테이션 종류
+    
+    4-2-1 메소드 파라미터의 종류
+     ● HttpServletRequest, HttpServletResponse
+     ● HttpSession
+     ● WebRequest, NativeWebRequest
+	 ● Locale
+	 ● InputStream, Reader 
+	 ● OutputStream, Writer
+	 ● @PathVariable
+	 ● @RequestParam
+	 ● @CookieValue
+	 ● @RequestHeader
+	 ● Map,Model,ModelMap
+	 ● @ModelAttribute 
+	 ● Erros, BindingResult
+	 ● SessionStatus
+	 ● @RequestBody
+	 ● @Value
+	 ● @Valid
+	 	 
+    4-2-2 리턴 타입의 종류	 
+	 	 
+	 
+	 	 
+	 	 	 
+  
 	
  	  
  	 	    

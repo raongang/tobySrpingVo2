@@ -32,5 +32,4 @@ public class HelloController implements Controller{
 		//return new ModelAndView("/WEB-INF/view/hello",model);
 		return new ModelAndView("hello",model);
 	}
-
 }
