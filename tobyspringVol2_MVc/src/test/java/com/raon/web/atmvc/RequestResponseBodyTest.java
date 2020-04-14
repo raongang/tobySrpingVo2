@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.raon.web.AbstractDispatcherServletTest;
 
 public class RequestResponseBodyTest extends AbstractDispatcherServletTest{
-
+	
 	@Test
 	public void requestBody() throws ServletException, IOException{
 		setClasses(Ctrl1.class);

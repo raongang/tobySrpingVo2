@@ -4,95 +4,62 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 
-	<!-- The definition of the Root Spring Container shared by all Servlets and Filters-->
-	<!--  하나 이상의 XML을 설정파일을 사용하고 싶을 경우 여러 줄에 걸쳐주거나 공백으로 분리해서 선언가능. -->
+	<!-- The definition of the Root Spring Container shared by all Servlets 
+		and Filters -->
+	<!-- 하나 이상의 XML을 설정파일을 사용하고 싶을 경우 여러 줄에 걸쳐주거나 공백으로 분리해서 선언가능. -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<!-- 
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
-		 -->
-		 <param-value>/WEB-INF/spring/test-context.xml</param-value>
+		<!-- <param-value>/WEB-INF/spring/root-context.xml</param-value> -->
+		<param-value>/WEB-INF/spring/test-context.xml</param-value>
 	</context-param>
-	
-	<!-- Creates the Spring Container shared by all Servlets and Filters 
-	    1. ContextLoaderListener 
-	      - 웹 애플리케이션이 시작할 때 자동으로 root application context를 만들고 초기화.
-          - 웹 애플리케이션이 종료될 때 context를 같이 종료시켜 준다.
-          
-        2. ContextLoaderListener 의 DEFAULT값.
-          - applicationContext Class : XmlWebApplicationContext 
-          - XML설정파일위치 : /WEB-INF/applicationContext.xml
-          
-        3. ContextLoaderListener 의 DEFAULT값 변경
-          - WebApplicationContext Interface를 구현해야 함.
-          
-        4. ContextLoaderListener는 기본적으로 /WEB-INF/applicationContext.xml을 설정파일로 사용하는 
-           XmlWebApplicationContext 타입의 application context를 생성하고, 생성된 서블릿 컨텍스트의
-           attribute로 등록해서 다른 곳에서 손쉽게 가져다 이용할수 있음.
-	-->
-	
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	
-	<!-- root-application context 를 java config 로 설정시  
-	     AnnotationConfigWebApplicationContext - @Configuration을 설정정보로 사용한다. 
-	                                           - XML방식일 경우에는 <context:annotation-config />이 등록해주는 빈을 기본적으로 추가 해줌.
-	     
-	<context-param>
-		<param-name>contextClass</param-name>
-		<param-value>
-			org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-		</param-value>
-	</context-param>
-	
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>myPrject.config.AppConfig</param-value>
-	</context-param>
-	-->
 
-	<!-- Processes application requests (front controller servlet)
-	    - 서블릿이 초기화 될때 자신만의 context를 생성하고 초기화함.
-	    - 웹 어플리케이션 레벨에 등록된 root application context를 찾아서 자신의 부모 context로 사용한다.
-		<load-on-startup> 
-		- 서블릿 컨테이너가 등록된 서블릿을 언제 만들고 초기화할지, 또 그 순서는 어떻게 되는지를 지정하는 정수.
-		- 생략, 음수 : 서블릿 컨테이너가 임의로 정한 시점에서 만들어지고 초기화 
-		- 0 이상 : 웹어플리케이션이 실행되는 시점에서 서블릿을 로딩하고 초기화한다.
-		- 만약 여러 개의 서블릿이 있다면 작은 순서대로 우선순위.
-	-->
+	<!-- Creates the Spring Container shared by all Servlets and Filters 1. 
+		ContextLoaderListener - 웹 애플리케이션이 시작할 때 자동으로 root application context를 만들고 
+		초기화. - 웹 애플리케이션이 종료될 때 context를 같이 종료시켜 준다. 2. ContextLoaderListener 의 DEFAULT값. 
+		- applicationContext Class : XmlWebApplicationContext - XML설정파일위치 : /WEB-INF/applicationContext.xml 
+		3. ContextLoaderListener 의 DEFAULT값 변경 - WebApplicationContext Interface를 
+		구현해야 함. 4. ContextLoaderListener는 기본적으로 /WEB-INF/applicationContext.xml을 
+		설정파일로 사용하는 XmlWebApplicationContext 타입의 application context를 생성하고, 생성된 서블릿 
+		컨텍스트의 attribute로 등록해서 다른 곳에서 손쉽게 가져다 이용할수 있음. -->
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<!-- root-application context 를 java config 로 설정시 AnnotationConfigWebApplicationContext 
+		- @Configuration을 설정정보로 사용한다. - XML방식일 경우에는 <context:annotation-config />이 
+		등록해주는 빈을 기본적으로 추가 해줌. <context-param> <param-name>contextClass</param-name> 
+		<param-value> org.springframework.web.context.support.AnnotationConfigWebApplicationContext 
+		</param-value> </context-param> <context-param> <param-name>contextConfigLocation</param-name> 
+		<param-value>myPrject.config.AppConfig</param-value> </context-param> -->
+
+	<!-- Processes application requests (front controller servlet) - 서블릿이 초기화 
+		될때 자신만의 context를 생성하고 초기화함. - 웹 어플리케이션 레벨에 등록된 root application context를 
+		찾아서 자신의 부모 context로 사용한다. <load-on-startup> - 서블릿 컨테이너가 등록된 서블릿을 언제 만들고 초기화할지, 
+		또 그 순서는 어떻게 되는지를 지정하는 정수. - 생략, 음수 : 서블릿 컨테이너가 임의로 정한 시점에서 만들어지고 초기화 - 0 
+		이상 : 웹어플리케이션이 실행되는 시점에서 서블릿을 로딩하고 초기화한다. - 만약 여러 개의 서블릿이 있다면 작은 순서대로 우선순위. -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml
+			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-		
+
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-	<!-- servlet-context를 java config로 설정할 경우 
-	<servlet>
-		<servlet-name>spring</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		
-		<init-param>
-			<param-name>contextClass</param-name>
-			<param-value>
-				org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-			</param-value>
-		</init-param>
-		
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>ㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷ
-				myproject.config.WebConfig
-			</param-value>
-		</init-param>
-	</servlet>
-	-->
+
+	<!-- servlet-context를 java config로 설정할 경우 <servlet> <servlet-name>spring</servlet-name> 
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> 
+		<init-param> <param-name>contextClass</param-name> <param-value> org.springframework.web.context.support.AnnotationConfigWebApplicationContext 
+		</param-value> </init-param> <init-param> <param-name>contextConfigLocation</param-name> 
+		<param-value>ㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷ myproject.config.WebConfig </param-value> </init-param> 
+		</servlet> -->
+</web-app>

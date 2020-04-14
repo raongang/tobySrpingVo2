@@ -121,8 +121,6 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 		if (this.request == null) 
 			throw new IllegalStateException("request가 준비되지 않았습니다");
 		this.dispatcherServlet.service(this.request, this.response);
-	
-		System.out.println("this >> " + this);
 		
 		return this;
 	}
@@ -167,7 +165,6 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 
 	@Override
 	public AfterRunService assertViewName(String viewName) {
-		System.out.println("1-----------------------------");
 		System.out.println(this.getModelAndView().getViewName());
 		assertThat(this.getModelAndView().getViewName(), is(viewName));
 		return this;

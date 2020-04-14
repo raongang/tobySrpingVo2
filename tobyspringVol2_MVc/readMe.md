@@ -84,7 +84,6 @@
          └ MarshallingHttpMessageConverter (XML)
          └ MappingJacksonHttpMessageConverter (JSON)
       
-      
       - ex) 
       @Controller
       public class HelloController{
@@ -98,7 +97,6 @@
  3.3.2 핸들러 매핑
     - HTTP 요청정보를 이용해서 이를 처리할 핸들러오브젝트 즉, 컨트롤러를 찾고 핸들러 실행 체인(HandlerExecutionChain) 을 돌려준다.
     - HandlerMapping은 컨트롤러의 타입과 상관없이 여러 가지 타입의 컨트롤러를 선택할 수 있다.
-    
 
     3.3.2.1 스프링이 제공하는 5가지 핸들러매핑.
      DEFAULT : BeanNamedUrlHandlerMapping DefaultAnnotationHandlerMapping
@@ -232,9 +230,15 @@
 	 ● @PathVariable
 	 ● @RequestParam
 	 ● @CookieValue
+	   - 쿠키값이 반드시 존재해야 하며, 없을 경우에도 예외가 발생하지 않게 할려면 required=false
+	   - defaultValue선언도 가능.
 	 ● @RequestHeader
 	 ● Map,Model,ModelMap
+	   - 파라미터로 정의해서 핸들러 어댑터에서 미리 만들어서 제공해준다.
 	 ● @ModelAttribute 
+	   - 별도의 설정 없이도 자동으로 뷰에 전달됨.
+	   - 컨트롤러가 전달받는 오브젝트 형태의 정보를 가르킨다.
+	   - 하나의 오브젝트에 클라이언트의 요청정보를 담아서 한번에 전달되는 것이기 때문에 이를 Command Pattern에서 말하는 Command Object라고도 함.
 	 ● Erros, BindingResult
 	 ● SessionStatus
 	 ● @RequestBody
@@ -242,20 +246,58 @@
 	 ● @Valid
 	 	 
     4-2-2 리턴 타입의 종류	 
-	 	 
+     - 컨트롤러가 핸들러 어댑터를 거쳐서 DispatcherServlet에 돌려줘야 하는 정보는 Model 과 View
+     - handlerAdapter를 거쳐서 최종적으로 DispatcherServlet로 돌아갈 때는 ModelAndView 타입으로 리턴값이 전달됨. 
+         		
+      4-2-2-1. 자동 추가 모델 오브젝트와 자동생성 뷰 이름 
+        - 메소드 리턴 타입에 상관없이 조건만 맞으면 모델에 자동 추가됨
+        
+	 	1) @ModelAttribute 모델 오브젝트 또는 커맨드 오브젝트            
+	    - 자동으로 컨트롤러가 리턴하는 모델에 추가됨.
+	    - 기본적으로 모델 오브젝트 이름은 파라미터 타입이름.
 	 
-	 	 
-	 	 	 
-  
-	
- 	  
- 	 	    
- 	    
- 	 	  
- 	   
- 	  
- 	
-     
-      
+		 2) Map,Model,ModelMap 파라미터
+	    - 컨트롤러 메소드에 Map,Model,ModelMap 타입의 파라미터를 사용하면 미리 생성된 모델 맵 오브젝트를 전달받아서 오브젝트를 추가가능.
+	    - 파라미터에 추가한 오브젝트는 DispatcherServlet를 거쳐서 뷰에 전달되는 모델에 자동 추가된다.
+	    
+	 	3) @ModelAttribute 메소드
+	    - @RequestMapping과 같이 사용하지 않는다.
+	    - codes라는 이름으로 다른 컨트롤러가 실행될때 모델에 자동 추가된다.
+	    
+	    ex)
+	      @ModelAttribute("codes")
+	      public List<Code> codes(){
+	      	return codeService.getAllCodes();
+	      } 
+	      
+	     4) BidingResult	      
+	      
+	      
+	      
+	 ● ModelAndView	
+	   - 자주 사용하지는 않음.
+	 
+	 ● String
+	   - 메소드 리턴 타입이 String이면 리턴값은 뷰 이름으로 사용됨.	 
+	 
+	 ● void	 
+	   - RequestToViewNameResolver전략을 통해 자동생성되는 뷰 이름이 사용됨.
+	   - 디폴트로 등록된 RequestToViewNameResolver은 URL을 따라서 뷰이름을 만들어준다. 
 
-      
+	 ●  Model Object
+	   - 뷰 이름은 RequestToViewNameResolver로 자동 생성하는 것을 사용하고 코드를 이용해 모델에 추가할 오브젝트가 하나뿐이라면, 오브젝트를 바로 리턴해도 가능.
+  	   - 스프링은  리턴 타입이 미리 지정된 타입이나 void가 아닌 단순 오브젝트라면 이를 모델 오브젝트로 인식해서 모델에 자동으로 추가해준다.
+  	   
+  	  ex) "user" 이름으로 모델에 추가됨.ㄴ
+  	  
+  	  @RequestMapping("/view")
+  	  public User view(@RequestParam int id){
+  	  	return userService.getUser(id);
+  	  }
+  	  
+	 ●  Map/Model/ModelMap
+	   - 메소드의 코드에서 Map,Model,ModelMap타입의 오브젝트를 직접 만들어서 리턴시 이 오브젝트는 모델로 사용된다.
+	   - Map타입의 단일 오브젝트 리턴은 피해야함
+	 
+	   
+	

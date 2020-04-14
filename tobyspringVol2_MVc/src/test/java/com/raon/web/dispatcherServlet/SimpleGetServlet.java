@@ -19,5 +19,8 @@ public class SimpleGetServlet extends HttpServlet{
 		resp.getWriter().print("Hello " + name);
 		resp.getWriter().print("</BODY></HTML>");
 		
+		
+		
 	}
 }
+

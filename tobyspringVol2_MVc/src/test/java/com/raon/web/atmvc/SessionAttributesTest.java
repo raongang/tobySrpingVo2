@@ -38,7 +38,6 @@ public class SessionAttributesTest extends AbstractDispatcherServletTest{
 		assertThat(((User)getModelAndView().getModel().get("user")).getEmail(),is("mail@spring.com"));
 		assertThat(session.getAttribute("user"),is(nullValue()));
 		
-		
 	}
 	
 	
@@ -58,11 +57,7 @@ public class SessionAttributesTest extends AbstractDispatcherServletTest{
 			System.out.println("submit Start");
 			sessionStatus.setComplete();
 		}
-			
-		
-		
 	}//end UserController
-	
 	
 	/** dto */
 	static class User {
@@ -78,6 +73,7 @@ public class SessionAttributesTest extends AbstractDispatcherServletTest{
 		public String toString() { return "User [email=" + email + ", id=" + id + ", name=" + name + "]";	}		
 	}
 	
+
 	
 	
 }//end SessionAttributesTest
