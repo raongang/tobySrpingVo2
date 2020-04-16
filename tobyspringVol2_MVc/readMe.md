@@ -248,6 +248,7 @@
     4-2-2 리턴 타입의 종류	 
      - 컨트롤러가 핸들러 어댑터를 거쳐서 DispatcherServlet에 돌려줘야 하는 정보는 Model 과 View
      - handlerAdapter를 거쳐서 최종적으로 DispatcherServlet로 돌아갈 때는 ModelAndView 타입으로 리턴값이 전달됨. 
+     - Model은 맵에 담긴 정보
          		
       4-2-2-1. 자동 추가 모델 오브젝트와 자동생성 뷰 이름 
         - 메소드 리턴 타입에 상관없이 조건만 맞으면 모델에 자동 추가됨
