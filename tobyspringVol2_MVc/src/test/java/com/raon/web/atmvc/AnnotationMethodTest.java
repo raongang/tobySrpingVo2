@@ -29,7 +29,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.raon.web.AbstractDispatcherServletTest;
 
 public class AnnotationMethodTest extends AbstractDispatcherServletTest {
-
+	
+	
 	@Test
 	public void simple() throws ServletException, IOException{
 		setClasses(ViewResolver.class, SimpleController.class);
@@ -150,7 +151,6 @@ public class AnnotationMethodTest extends AbstractDispatcherServletTest {
 			System.out.println("errors.getFieldErrors().get(0).getField() : " + errors.getFieldErrors().get(0).getField());
 			return errors.getFieldErrors().get(0).getField();
 		}
-		
 	}
 	
 	static class User {
@@ -262,7 +262,6 @@ public class AnnotationMethodTest extends AbstractDispatcherServletTest {
 		}
 		
 	}//end ReturnController
-	
-	
+
 
 }//end AnnotationMethodTest
