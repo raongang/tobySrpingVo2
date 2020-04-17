@@ -321,6 +321,38 @@
 	       
 		● SessionStatus 
 		   - 더 이상 세션을 이용하지 않을경우 setComplete() 메소드를 호출해서 세션을 제거해 줘야 한다.
-			       
+			  
+  4.3 모델 바인딩과 검증
+    Controller method에 @ModelAttribute가 지정된 파라미터를 @Controller 메소드에 추가시 동작방식.
+      
+      1. 파라미터 타입의 오브젝트 생성
+        - @ModelAttribute User user 일 경우 User타입 오브젝트 생성 
+        - default생성자 필수
+        - @SessionAttributes에 의해 세션에 저장된 모델 오브젝트가 있을 경우에는 오브젝트 생성 대신, 세션에 저장된 오브젝트를 가져온다.
+      2. 준비된 모델 오브젝트의 프로퍼티에  웹 파라미터를 바인딩.
+        - 스프링의 기본에디터 이용 HTTP 파라미터 값을 모델의 프로퍼티 타입에 맞게 전환하고, 전환 불가능시 BindResult 오브젝트안에 바인딩 오류를 저장해서 컨트롤러로 넘겨주거나 예외를 발생시킨다.
+      3. 모델의 값을 검증한다.
+        - 바인딩에서 타입 검증뿐 아니라 그외 검증도 가능(ex. 필수프로퍼티에 null, 숫자지정범위초과)  
+        - 여기서 바인딩은 오브젝트의 프로퍼티에 값을 넣는것을 의미한다.       
+        
+	4.3.1 스프링 바인딩 과정에서 변환작업을 위해 제공하는 2종류의 API.
+	   ● PropertyEditor
+	      - 변환을 위해 사용되는 메소드는 총4가지
+	         └ HTTP요청 파라미터와 같은 문자열은 스트링 타입으로 서블릿에서 가져옴 
+	          └ setAsText() : 메소드를 이용해 스트링 타입의 문자열을 넣고  getValue() : 변환된 오브젝트를 가져옴
+	          └ setValue() : 오브젝트를 넣고 getAsText() 메소드로 변환된 문자열 가져옴.
 	   
-	
+	      ※ 컨트롤러 메소드의 바인딩 원리
+	       1. @Controller 메소드는 호출해줄 책임이 있는 AnnotationMethodHandlerAdapter는 @RequestParam, @ModelAttribute, @PathVariable 등처럼 HTTP요청을 파라미터 변수에
+	                 바인딩 해주는 작업이 필요한 애노테이션을 만나면 먼저 WebDataBinder를 생성.
+	       2. WebDataBinder는 HTTP요청으로부터 가져온 문자열을 파라미터 타입의 오브젝트로 변환하는 기능도 포함 ( PropertyEditor 를 이용 ) 
+	       3. 커스텀 프로퍼티에디터를 @RequestParam같으 메소드 파라미터 바인딩에 적용할려면 WebDataBinder에 프로퍼티 에디터를 직접 등록해야 함. 
+	       4. WebDataBinder는 내부적으로 만들어지기 때문에, 스프링이 제공하는 WebDaataBinder 초기화 메소드인 @InitBinder를 사용함.
+	   
+	    ● @InitBinder
+	      - WebDataBinder 바인딩 적용 대상 - @RequestParam parameter, @CookieValue parameter, @RequestHeader parameter, @PathVariable Parameter, @ModelAttribute parameter
+	      
+	   
+      
+        
+ 	

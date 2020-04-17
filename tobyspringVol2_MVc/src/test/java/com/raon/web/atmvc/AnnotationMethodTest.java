@@ -102,7 +102,6 @@ public class AnnotationMethodTest extends AbstractDispatcherServletTest {
 		
 		initRequest("/hello4").addParameter("id", "15").runService().assertViewName("15");
 		
-		
 		initRequest("/hello5").addParameter("id", "1").addParameter("name", "Spring");
 		runService().assertViewName("1/Spring");
 		assertThat(getModelAndView().getModel().get("user"), is(notNullValue()));
@@ -260,8 +259,7 @@ public class AnnotationMethodTest extends AbstractDispatcherServletTest {
 		public Map hello4() { 
 			Map map = new HashMap(); map.put("name", "spring"); return map; 
 		}
-		
 	}//end ReturnController
-
+	
 
 }//end AnnotationMethodTest

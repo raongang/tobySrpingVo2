@@ -53,7 +53,6 @@ public class SessionAttributesTest extends AbstractDispatcherServletTest{
 			System.out.println("form Start");
 			return new User(1,"Spring", "mail@spring.com");
 		}
-		
 
 		 //스프링은  리턴 타입이 미리 지정된 타입이나 void가 아닌 단순 오브젝트라면 이를 모델 오브젝트로 인식해서 모델에 자동으로 추가해준다.
 		//@ModelAttribute 로 지정된 파라미터가 세션에 있을 경우 이를 가져오고, @ModelAttribute는 폼에서 전달된 필드정보를 모델 오브젝트의 프로퍼티로 넣어준다.
