@@ -1,5 +1,22 @@
 package com.raon.web.atmvc;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
+import java.beans.PropertyEditorSupport;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+
+import org.junit.Test;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.raon.web.AbstractDispatcherServletTest;
 
 /*
  *  
@@ -9,26 +26,91 @@ package com.raon.web.atmvc;
  *  prototypeEditor 가 상태값을 가지기 때문에 멀티스레드 환경에서 여러 오브젝트가 공유해서 사용하면 안된다.
  * 
  * */
-public class PrototypePropertyEditorTest {
+public class PrototypePropertyEditorTest extends AbstractDispatcherServletTest{
 
 	/**
 	 * ====================================================================================================
 	 * 
 	 */
 	
+	@Test
+	public void fackeCodePropertyEditor() throws ServletException,IOException{
+		setClasses(UserController.class);
+		initRequest("/add.do").addParameter("id", "1").addParameter("name", "spring").addParameter("userType", "1");
+		runService();
+		
+		/* 
+		 ● void	 
+		   - RequestToViewNameResolver전략을 통해 자동생성되는 뷰 이름이 사용됨.
+		   - 디폴트로 등록된 RequestToViewNameResolver은 URL을 따라서 뷰이름을 만들어준다.
+		 */ 
+		   
+		User user = (User)getModelAndView().getModel().get("user");
+		assertThat(user.getUserType().getId(),is(1));
+		
+		try {
+			user.getUserType().getName();
+			fail();
+		}catch(UnsupportedOperationException e) {}
+		
+	}
+	
+	
+	@Controller
+	static class UserController {
+		@InitBinder
+		public void initBinder(WebDataBinder dataBinder) {
+			//FakeCodePropertyEditor - id만 들어 있는 모조 오브젝트
+			dataBinder.registerCustomEditor(Code.class, new FakeCodePropertyEditor());
+		}
+		
+		@RequestMapping("/add")
+		public void add(@ModelAttribute User user) {
+			System.out.println("user >> "  +user);
+		}
+	}
+	
+	static class FakeCodePropertyEditor extends PropertyEditorSupport{
+		
+		public void setAsText(String text) throws IllegalArgumentException{
+			Code code = new FakeCode();
+			
+			code.setId(Integer.parseInt(text));
+			setValue(code);
+		}
+		public String getAsText() {
+			System.out.println("getAsText execute");
+			return String.valueOf(((Code)getValue()).getId());
+		}
+	}
+	
 	
 	static class User {
 		int id; String name; Code userType;
+		
 		public int getId() {	return id;	}
 		public void setId(int id) { this.id = id; }
+		
 		public String getName() { return name; }
 		public void setName(String name) { this.name = name; }
+		
 		public Code getUserType() { return userType; }
 		public void setUserType(Code userType) { this.userType = userType; }
+		
 		@Override
 		public String toString() { return "User [id=" + id + ", name=" + name + ", userType=" + userType + "]";
 		}		
 	}//end User
+	
+	
+	static class FakeCode extends Code{
+		public String getName() {
+			throw new UnsupportedOperationException();
+		}
+		public void setName(String name) {
+			throw new UnsupportedOperationException();
+		}
+	}
 	
 	static class Code {
 		int id;
@@ -41,5 +123,18 @@ public class PrototypePropertyEditorTest {
 			return "Code [id=" + id + ", name=" + name + "]";
 		}
 	}//end Code
+	
+	/**
+	 * ====================================================================================================
+	 *  프로토 타입 스코프 - 컨테이너에게 빈을 요청할 때마다 매번 새로운 오브젝트를 생성.
+	 */
+	
+	//프로토타입 도메인 오브젝트 프로퍼티 에디터 
+	//  - db에서 읽어온 완전한 Code오브젝트로 변환
+	//  - 다른 계층에서 사용시 제한을 받지 않음.
+	@Test
+	public void prototypePropertyEditor() throws ServletException, IOException{
+		
+	}
 	
 }

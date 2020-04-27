@@ -347,7 +347,7 @@
 	                 바인딩 해주는 작업이 필요한 애노테이션을 만나면 먼저 WebDataBinder를 생성.
 	       2. WebDataBinder는 HTTP요청으로부터 가져온 문자열을 파라미터 타입의 오브젝트로 변환하는 기능도 포함 ( PropertyEditor 를 이용 ) 
 	       3. 커스텀 프로퍼티에디터를 @RequestParam같은 메소드 파라미터 바인딩에 적용할려면 WebDataBinder에 프로퍼티 에디터를 직접 등록해야 함. 
-	       4. WebDataBinder는 내부적으로 만들어지기 때문에, 스프링이 제공하는 WebDaataBinder 초기화 메소드인 @InitBinder를 사용함.
+	       4. WebDataBinder는 내부적으로 만들어지기 때문에, 스프링이 제공하는 WebDataBinder 초기화 메소드인 @InitBinder를 사용함.
 	   
 	    ● @InitBinder
 	      - WebDataBinder 바인딩 적용 대상 - @RequestParam parameter, @CookieValue parameter, @RequestHeader parameter, @PathVariable Parameter, @ModelAttribute parameter
