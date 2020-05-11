@@ -359,9 +359,46 @@
 	    
 	    ● 프로토타입 빈 프로퍼티 에디터
 	       - PropertyEditor는 싱글톤으로 등록 불가.
-	       - 
+	        
+	4.3.2 Converter와 Formatter
+	  - PropertyEditor는 매번 바인딩시 새로운 오브젝트를 만들어야 하고 빈등록시 반드시 프로토타입의 스코프를 선언해야 하므로 근본적인 위험성을 지니고 있어 불편하다
+	  - PropertyEditor를 대신할수 있게 스프링3.0에서 새로운 타입변환 Convert Interface API, GenericConverter와 ConverterFactory를 이용하여 만들수 있음.     
+	  - PropertyEditor와 달리 Converter 변환과정에는 메소드가 한번만 호출됨. (변환작업중 상태를 인스턴스 변수로 저장하지 않음 -> 멀티쓰레드에 안전 공유가능 ) 
+
+	    4.3.2.1 Converter  
+	      - 소스에서 타입으로의 단방향
+	      - PropertyEditor처럼 한쪽이 String으로 고정되어 있지 않고, 소스와 타킷의 타입을 임의로 지정가능.
 	      
-	      
+	    ● ConversionService
+	      - Controller의 바인딩 작업에 Conterver를 추가하는 대신 ConversionService타입의 오브젝트를 통해 WebDataBinder에 설정해야 함.
+	      - 멀티쓰레드에 안전
+	      - 여러종류의 컨버터를 이용해서 하나 이상의 타입변환 서비스를 제공해주는 오브젝트를 만들 때 사용하는 Interface.
+	        ( 보통 ConversionService를 구현한 GenericConversionService Class를 bean으로 등록해서 사용 ) 
+	      - GenericConversionService 는 ConverterRegistry Interface도 구현
+      
+      
+	       WebDataBinder에 ConversionService를 등록하는 2가지 방식
+			● InitBinder를 통한 수동등록      
+			  - ConversionService를 빈으로 등록하고 이를 컨트롤러가 DI받아서 @InitBinder 메소드를 통해 직접 원하는 ConversionService를 설정
+			  - 직접 만든 컨버트 변환 오브젝트를 추가하기 위해서는 
+			    1. ConversionService 상속한 클래스 생성-> 생성자에서 addConvert() 메소드로 등록할 컨버터를 추가 -> 확장 클래스를 빈등록
+			    2. 추가할 컨버터 클래스를 빈으로 등록 -> ConvertServiceFactoryBean을 이용해서 프로퍼티로 DI받은 컨버터들로 초기화된 GenericConversionService 를 가져오는 방법.
+			    
+			● ConfigurableWebBindingInitializer를 이용한 일괄 등록
+			  - 싱글톤이므로 모든 컨트롤러에 한번에 정의가능
+			  - WebBindingInitializer를 이용한다.  ( WebBindingInitializer는 모든 컨트롤러에 일괄 적용되는 @InitBinder 메소드를 정의한 것으로 볼 수 있음.
+			  - ConversionService 적용시 ConfigurableWebBindingInitializer를 이용하면 빈설정만으로도 WebBindingInitializer 빈을 등록 할 수 있다.
+
+	    4.3.2.2 Formatter Interface			  
+	       - String type의 폼필드 정보와 컨트롤러 메소드의 파라미터 사이에 양방향으로 작용할 수 있도록 두개의 변환 메소드를 가짐.
+	       - Formatter 자체는 범용이 아니므로 Formatter를 구현해서 만든 타입변환 오브젝트를 GenericConversionService등에 직접 등록 불가
+	       - Formatter 구현 오브젝트를 GenericConverter 타입으로 포장해서 등록해주는 기능을 가진 FormatterConversionService를 통해서만 적용가능.
+	       - 구성은 print(), parse()
+	          print() : object->문자열변환
+	          parse() : 문자열->object
+	       
+		  		     
+		    
 	   
       
         

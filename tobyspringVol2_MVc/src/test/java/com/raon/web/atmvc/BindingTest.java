@@ -228,6 +228,4 @@ public class BindingTest extends AbstractDispatcherServletTest {
 	 *		</bean>
 	 */
 	
-	
-	
 }//end BindingTest

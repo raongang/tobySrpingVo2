@@ -36,7 +36,7 @@ public class PrototypePropertyEditorTest extends AbstractDispatcherServletTest{
 	 */
 	
 	@Test
-	public void fackeCodePropertyEditor() throws ServletException,IOException{
+	public void fackeCodePropertyEdito2222222r() throws ServletException,IOException{
 		setClasses(UserController.class);
 		initRequest("/add.do").addParameter("id", "1").addParameter("name", "spring").addParameter("userType", "1");
 		runService();
