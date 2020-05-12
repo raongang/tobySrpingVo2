@@ -8,8 +8,6 @@ package com.raon.web.atmvc;
  * 
  * */
 public class PrototypePropertyEditorTest {
-
-	
 	
 	static class User {
 		int id; String name; Code userType;
@@ -22,7 +20,7 @@ public class PrototypePropertyEditorTest {
 		@Override
 		public String toString() { return "User [id=" + id + ", name=" + name + ", userType=" + userType + "]";
 		}		
-	}//end User
+	}//end User 
 	
 	static class Code {
 		int id;
