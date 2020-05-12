@@ -9,10 +9,6 @@ import javax.validation.constraints.NotNull;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -23,8 +19,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
+																						
 import com.raon.web.AbstractDispatcherServletTest;
 
 
@@ -197,5 +192,8 @@ public class ValidatorTest extends AbstractDispatcherServletTest{
 			return "User [age=" + age + ", id=" + id + ", name=" + name + "]";
 		}
 	}
+	
+	
+	
 	
 }//end class

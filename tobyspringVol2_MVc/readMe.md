@@ -72,7 +72,6 @@
        - Controller Interface를 직접 구현하는 것은 권장되지 않음
        - 적어도 웹브라우저를 클라이언트로 갖는 컨트롤러의 필수 기능이 구현되어 있는 AbstractController를 구현해서 만드는게 나음.
      
-      
     ● AnnotationMehtodHandlerAdatper
       - 지원하는 컨트롤러 타입이 정해져 있지 않다.
       - 메소드에 붙은 몇가지 애노테이션 정보와 메소드 이름, 파라미터, 리턴 타입에 대한 규칙 등을 종합적으로 분석해서 컨트롤러를 선발하고 호출 방식을 결정.
@@ -218,6 +217,7 @@
  	  - URL을 기준으로 뷰 이름을 결정
  	    
 4. 스프링 @MVC
+    
     AnnotationMethodHandlerAdapter 가 호출하는 @Controller 메소드의 사용가능한 파라미터 타입과 애노테이션 종류
     
     4-2-1 메소드 파라미터의 종류
