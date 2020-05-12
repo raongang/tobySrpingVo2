@@ -159,6 +159,7 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 
 	@Override
 	public AfterRunService assertModel(String name, Object value) {
+		System.out.println("this.getModelAndView().getModel().get(name) : " + this.getModelAndView().getModel().get(name));
 		assertThat(this.getModelAndView().getModel().get(name), is(value));
 		return this;
 	}

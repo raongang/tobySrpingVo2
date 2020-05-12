@@ -72,7 +72,6 @@
        - Controller Interface를 직접 구현하는 것은 권장되지 않음
        - 적어도 웹브라우저를 클라이언트로 갖는 컨트롤러의 필수 기능이 구현되어 있는 AbstractController를 구현해서 만드는게 나음.
      
-      
     ● AnnotationMehtodHandlerAdatper
       - 지원하는 컨트롤러 타입이 정해져 있지 않다.
       - 메소드에 붙은 몇가지 애노테이션 정보와 메소드 이름, 파라미터, 리턴 타입에 대한 규칙 등을 종합적으로 분석해서 컨트롤러를 선발하고 호출 방식을 결정.
@@ -218,6 +217,7 @@
  	  - URL을 기준으로 뷰 이름을 결정
  	    
 4. 스프링 @MVC
+    
     AnnotationMethodHandlerAdapter 가 호출하는 @Controller 메소드의 사용가능한 파라미터 타입과 애노테이션 종류
     
     4-2-1 메소드 파라미터의 종류
@@ -347,7 +347,7 @@
 	                 바인딩 해주는 작업이 필요한 애노테이션을 만나면 먼저 WebDataBinder를 생성.
 	       2. WebDataBinder는 HTTP요청으로부터 가져온 문자열을 파라미터 타입의 오브젝트로 변환하는 기능도 포함 ( PropertyEditor 를 이용 ) 
 	       3. 커스텀 프로퍼티에디터를 @RequestParam같은 메소드 파라미터 바인딩에 적용할려면 WebDataBinder에 프로퍼티 에디터를 직접 등록해야 함. 
-	       4. WebDataBinder는 내부적으로 만들어지기 때문에, 스프링이 제공하는 WebDaataBinder 초기화 메소드인 @InitBinder를 사용함.
+	       4. WebDataBinder는 내부적으로 만들어지기 때문에, 스프링이 제공하는 WebDataBinder 초기화 메소드인 @InitBinder를 사용함.
 	   
 	    ● @InitBinder
 	      - WebDataBinder 바인딩 적용 대상 - @RequestParam parameter, @CookieValue parameter, @RequestHeader parameter, @PathVariable Parameter, @ModelAttribute parameter
@@ -359,9 +359,66 @@
 	    
 	    ● 프로토타입 빈 프로퍼티 에디터
 	       - PropertyEditor는 싱글톤으로 등록 불가.
-	       - 
+	        
+	4.3.2 Converter와 Formatter
+	  - PropertyEditor는 매번 바인딩시 새로운 오브젝트를 만들어야 하고 빈등록시 반드시 프로토타입의 스코프를 선언해야 하므로 근본적인 위험성을 지니고 있어 불편하다
+	  - PropertyEditor를 대신할수 있게 스프링3.0에서 새로운 타입변환 Convert Interface API, GenericConverter와 ConverterFactory를 이용하여 만들수 있음.     
+	  - PropertyEditor와 달리 Converter 변환과정에는 메소드가 한번만 호출됨. (변환작업중 상태를 인스턴스 변수로 저장하지 않음 -> 멀티쓰레드에 안전 공유가능 ) 
+
+	    4.3.2.1 Converter  
+	      - 소스에서 타입으로의 단방향
+	      - PropertyEditor처럼 한쪽이 String으로 고정되어 있지 않고, 소스와 타킷의 타입을 임의로 지정가능.
 	      
-	      
+	    ● ConversionService
+	      - Controller의 바인딩 작업에 Conterver를 추가하는 대신 ConversionService타입의 오브젝트를 통해 WebDataBinder에 설정해야 함.
+	      - 멀티쓰레드에 안전
+	      - 여러종류의 컨버터를 이용해서 하나 이상의 타입변환 서비스를 제공해주는 오브젝트를 만들 때 사용하는 Interface.
+	        ( 보통 ConversionService를 구현한 GenericConversionService Class를 bean으로 등록해서 사용 ) 
+	      - GenericConversionService 는 ConverterRegistry Interface도 구현
+      
+	       WebDataBinder에 ConversionService를 등록하는 2가지 방식
+			● InitBinder를 통한 수동등록      
+			  - ConversionService를 빈으로 등록하고 이를 컨트롤러가 DI받아서 @InitBinder 메소드를 통해 직접 원하는 ConversionService를 설정
+			  - 직접 만든 컨버트 변환 오브젝트를 추가하기 위해서는 
+			    1. ConversionService 상속한 클래스 생성-> 생성자에서 addConvert() 메소드로 등록할 컨버터를 추가 -> 확장 클래스를 빈등록
+			    2. 추가할 컨버터 클래스를 빈으로 등록 -> ConvertServiceFactoryBean을 이용해서 프로퍼티로 DI받은 컨버터들로 초기화된 GenericConversionService 를 가져오는 방법.
+			    
+			● ConfigurableWebBindingInitializer를 이용한 일괄 등록
+			  - 싱글톤이므로 모든 컨트롤러에 한번에 정의가능
+			  - WebBindingInitializer를 이용한다.  ( WebBindingInitializer는 모든 컨트롤러에 일괄 적용되는 @InitBinder 메소드를 정의한 것으로 볼 수 있음.
+			  - ConversionService 적용시 ConfigurableWebBindingInitializer를 이용하면 빈설정만으로도 WebBindingInitializer 빈을 등록 할 수 있다.
+
+	    4.3.2.2 Formatter Interface			  
+	       - String type의 폼필드 정보와 컨트롤러 메소드의 파라미터 사이에 양방향으로 작용할 수 있도록 두개의 변환 메소드를 가짐.
+	       - Formatter 자체는 범용이 아니므로 Formatter를 구현해서 만든 타입변환 오브젝트를 GenericConversionService등에 직접 등록 불가
+	       - Formatter 구현 오브젝트를 GenericConverter 타입으로 포장해서 등록해주는 기능을 가진 FormattingConversionService를 통해서만 적용가능.
+	       - Locale 타입의 현재 지역정보도 함께 제공된다.
+	       - 구성은 print(), parse()
+	          print() : object->문자열변환
+	          parse() : 문자열->object
+	          
+	          직접 만든 formatter를 적용하는 방법
+	           1. FomattingConversionService를 초기화해주는 기능을 가진 FormattingConversionServiceFactoryBean을 상속하여 Fomatter의 초기화 기능을 담당하는 
+	              installFomatters() 메소드를 오버라이딩해야 함.
+             
+	           2. FormattingConversionServiceFactoryBean을 사용하기 되면 자동으로 등록되는 fomatter가 2가지 있음.
+	             
+	             ● @NumberFormat
+	               - 문자열로 표현된 숫자를 java.lang.Number타입으로 반환
+	               
+	             ● @DateTimeFormat
+	               - 시간정보 관리 라이브러리인 Joda Time을 이용한 애노테이션 기반 포맷터 @DateTimeFormat을 제공 
+	               - 적용 필드 타입 : JDK의 Date, Calendar, Long 과 Joda라이브러리의 LocalDate, LocalTime, LocalDateTime, DateTime
+
+	    4.3.2.3 바인딩 기술의 적용 우선순위와 활용 전략             
+	             ● 사용자정의 타입의 바인딩을 위한 일괄 적용 : Converter
+	             ● 애노테이션 정보를 활용한 HTTP 요청과 모델필드 바인딩 : AnnotationFormatterFactory와 Formatter
+	             ● 특정 필드에만 적용되는 변환 기능 : PropertyEditor
+	             
+	4.3.4 Validator와 BindingResult, Errors       
+	             
+	  
+		    
 	   
       
         

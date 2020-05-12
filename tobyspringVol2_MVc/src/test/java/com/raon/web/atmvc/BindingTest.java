@@ -221,14 +221,11 @@ public class BindingTest extends AbstractDispatcherServletTest {
 	 *			binder.registerCustomEditor(Level.class,new LevelPropertyEditor());
 	 *		}
 	 *	 }
-	 *	
 	 *		<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 	 *			<property name="webBindingInitializer">
 	 *				<bean class="com.raon.web.atmvc.BindingTest$MyWebBindingInitializer" />
 	 *			</property>
 	 *		</bean>
 	 */
-	
-	
 	
 }//end BindingTest

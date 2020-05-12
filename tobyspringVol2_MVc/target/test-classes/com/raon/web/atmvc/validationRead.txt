@@ -1,0 +1,38 @@
+
+#Error오브젝트 사용을 위한 오류메세지 형식
+
+ ※ 스프링이 디폴트로 사용하는 MessageCodeResolver인 DefaultMessageCodeResolver는 다음과 같은 네개의 메세지 키 후보 생성
+   MessageResolver는 WebDataBinder 내부적으로 사용되므로 직접 이용할 일 없음.
+
+1. 에러코드.모델이름.필드이름 ( ex. field.required.userModel.nameField ) 
+2. 에러코드.필드이름 ( ex. field.required.nameField ) 
+3. 에러코드.타입이름 ( ex. field.required.UserModel ) 
+4. 에러코드 ( ex. field.required )
+
+->  1번부터 우선순위.
+
+
+
+# 데이터 바인딩 오류
+#   - typeMismatch.[ModelAttribute 명].[프로퍼티명]
+#   - typeMismatch.[프로퍼티명]
+#   - typeMismatch.[프로퍼티형(패키지명을포함)]  -> 필드타입  ex) typeMismatch.java.lang.BicDecimal
+#
+
+#typeMismatch.user.birthday=사용자의생년월일을 날짜 형식으로 입력해주세요.
+#typeMismatch.birthday=생년월일은 날짜 형식으로 입력해주세요.
+#typeMismatch.java.util.Date=날짜 형식으로 입력해주세요
+
+# 검증 오류
+#  [어노테이션명(패키지명은포함하지않음)].[ModelAttribute명].[프로퍼티명]
+#  [어노테이션명(패키지명은포함하지않음)].[프로퍼티명]
+#  [어노테이션명(패키지명은포함하지않음)].[프로퍼티형(패키지명을포함)]
+#  [어노테이션명(패키지명은포함하지않음)]
+
+# ex : ModelAttribute("user") 의 String형인 name프로퍼티에 @NotNull 어노테이션을 설정했다면
+
+#NotNull.user.name=사용자명은 필수입니다
+#NotNull.name=이름은 필수입니다.
+#NotNull.java.lang.String=필수입니다
+#NotNull=필수입니다.
+#Max에서 {1}은 @Max(Value)값을 의미한다.
