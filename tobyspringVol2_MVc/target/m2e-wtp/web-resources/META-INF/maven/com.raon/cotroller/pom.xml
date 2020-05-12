@@ -63,6 +63,36 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
+		<!-- 2020-05-12 포맷 라이브러리-->
+		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <version>2.10.6</version>
+		</dependency>
+		
+		<!-- 폼검증 라이브러리 추가
+			스프링 검증처리 클래스는 org.springframework.validator 패키지에 포함되어 있다.
+			스프링의 검증처리는 구현되어 있지 않고, 검증 처리 인터페이스와 검증 처리 결과를 저장하는 오브젝트.
+			
+			실제 어플리케이션에서 처리를 하기 위해서는 검증 처리를 구현해야 함.
+			실제로는 어플리케이션에서 오브젝트에서 제약을 선언적으로 정의하고, 그 제약을 근거로 검증하는 구조.
+			
+			Bean정의는 사양일뿐, 실제 구현은 하이버네이트 검증이 유명하므로, 해당 하이버네이트 검증을 추가.
+		 -->
+		 <dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		 </dependency>
+		
+	    <dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-validator</artifactId>
+	      <version>5.2.2.Final</version>
+	    </dependency>		 		 		
+		
+		
 		<!-- 2002-04-10  DataAccessException  -->
 		<dependency>
 		    <groupId>org.springframework</groupId>

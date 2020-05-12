@@ -376,7 +376,6 @@
 	        ( 보통 ConversionService를 구현한 GenericConversionService Class를 bean으로 등록해서 사용 ) 
 	      - GenericConversionService 는 ConverterRegistry Interface도 구현
       
-      
 	       WebDataBinder에 ConversionService를 등록하는 2가지 방식
 			● InitBinder를 통한 수동등록      
 			  - ConversionService를 빈으로 등록하고 이를 컨트롤러가 DI받아서 @InitBinder 메소드를 통해 직접 원하는 ConversionService를 설정
@@ -392,12 +391,33 @@
 	    4.3.2.2 Formatter Interface			  
 	       - String type의 폼필드 정보와 컨트롤러 메소드의 파라미터 사이에 양방향으로 작용할 수 있도록 두개의 변환 메소드를 가짐.
 	       - Formatter 자체는 범용이 아니므로 Formatter를 구현해서 만든 타입변환 오브젝트를 GenericConversionService등에 직접 등록 불가
-	       - Formatter 구현 오브젝트를 GenericConverter 타입으로 포장해서 등록해주는 기능을 가진 FormatterConversionService를 통해서만 적용가능.
+	       - Formatter 구현 오브젝트를 GenericConverter 타입으로 포장해서 등록해주는 기능을 가진 FormattingConversionService를 통해서만 적용가능.
+	       - Locale 타입의 현재 지역정보도 함께 제공된다.
 	       - 구성은 print(), parse()
 	          print() : object->문자열변환
 	          parse() : 문자열->object
-	       
-		  		     
+	          
+	          직접 만든 formatter를 적용하는 방법
+	           1. FomattingConversionService를 초기화해주는 기능을 가진 FormattingConversionServiceFactoryBean을 상속하여 Fomatter의 초기화 기능을 담당하는 
+	              installFomatters() 메소드를 오버라이딩해야 함.
+             
+	           2. FormattingConversionServiceFactoryBean을 사용하기 되면 자동으로 등록되는 fomatter가 2가지 있음.
+	             
+	             ● @NumberFormat
+	               - 문자열로 표현된 숫자를 java.lang.Number타입으로 반환
+	               
+	             ● @DateTimeFormat
+	               - 시간정보 관리 라이브러리인 Joda Time을 이용한 애노테이션 기반 포맷터 @DateTimeFormat을 제공 
+	               - 적용 필드 타입 : JDK의 Date, Calendar, Long 과 Joda라이브러리의 LocalDate, LocalTime, LocalDateTime, DateTime
+
+	    4.3.2.3 바인딩 기술의 적용 우선순위와 활용 전략             
+	             ● 사용자정의 타입의 바인딩을 위한 일괄 적용 : Converter
+	             ● 애노테이션 정보를 활용한 HTTP 요청과 모델필드 바인딩 : AnnotationFormatterFactory와 Formatter
+	             ● 특정 필드에만 적용되는 변환 기능 : PropertyEditor
+	             
+	4.3.4 Validator와 BindingResult, Errors       
+	             
+	  
 		    
 	   
       
