@@ -28,9 +28,7 @@ import com.raon.web.AbstractDispatcherServletTest;
  *  prototypeEditor 가 상태값을 가지기 때문에 멀티스레드 환경에서 여러 오브젝트가 공유해서 사용하면 안된다.
  * 
  * */
-<<<<<<< HEAD
-public class PrototypePropertyEditorTest {
-=======
+
 public class PrototypePropertyEditorTest extends AbstractDispatcherServletTest{
 
 	/**

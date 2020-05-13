@@ -155,6 +155,7 @@
   11-4. 프로토타입 빈의 dl 전략
     1) ApplicationContext, BeanFactory  ( getBean 메소드이용 ) 
     2) ObjectFactory, ObjectFactoryCreatingFactoryBean
+       - AppilicationConext를 DI받아서 getBean()을 호출해 원하는 프로토타입 빈을 가져오는 방식으로 동작하는 팩토리를 하나 만들어서 빈으로 등록
     3) ServiceLocatorFactoryBean
     
  12. 빈의 역할과 성격에 따라
