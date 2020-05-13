@@ -87,8 +87,6 @@ public class PrototypePropertyEditorTest extends AbstractDispatcherServletTest{
 		}
 	}
 	
->>>>>>> 5eaf4d82ff5fcfa6235f81ccc26460469af4ad18
-	
 	static class User {
 		int id; String name; Code userType;
 		

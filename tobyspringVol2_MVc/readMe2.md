@@ -157,10 +157,11 @@
     2) ObjectFactory, ObjectFactoryCreatingFactoryBean
        - AppilicationConext를 DI받아서 getBean()을 호출해 원하는 프로토타입 빈을 가져오는 방식으로 동작하는 팩토리를 하나 만들어서 빈으로 등록
     3) ServiceLocatorFactoryBean
+    4) Provider<T>
     
  12. 빈의 역할과 성격에 따라
    - 애플리케이션 빈(애플리케이션 로직 빈,애플리케이션 인프라 빈) , 인프라 빈(컨테이너 인프라 빈)
-   
+    
  13. 컨테이너 인프라 빈과 전용태그
    -> 컨테이너 인프라빈은 스프링 컨테이너의 기능을 확장해서 빈의 등록과 생성, 관계설정, 초기화 등의 작업에 참여하는 빈. 
    
