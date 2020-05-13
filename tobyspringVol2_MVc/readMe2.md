@@ -153,7 +153,7 @@
     - 싱글톤에서의 DI작업은 컨테이너에 요청할때 단 한번 오브젝트가 생성되고 이후로 생성되지 않으므로 DI....말고 DL..
     
   11-4. 프로토타입 빈의 dl 전략
-    1) ApplicationContext, BeanFactory
+    1) ApplicationContext, BeanFactory  ( getBean 메소드이용 ) 
     2) ObjectFactory, ObjectFactoryCreatingFactoryBean
     3) ServiceLocatorFactoryBean
     

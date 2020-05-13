@@ -22,10 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 																						
 import com.raon.web.AbstractDispatcherServletTest;
 
-
 /**
  * @author raongang
- *
  */
 public class ValidatorTest extends AbstractDispatcherServletTest{
 	
@@ -138,7 +136,6 @@ public class ValidatorTest extends AbstractDispatcherServletTest{
 
 		@Override
 		public void validate(Object target, Errors errors) {
-			
 			System.out.println("UserValidator validate");
 			
 			// TODO Auto-generated method stub
