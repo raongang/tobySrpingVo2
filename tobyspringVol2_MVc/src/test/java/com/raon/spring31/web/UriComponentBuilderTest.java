@@ -17,7 +17,7 @@ public class UriComponentBuilderTest {
 
 	@Test
 	public void uriCB() {
-		/* 만약 컨트롤러에서 현재 요청의 URI에 대한 정버를 얻거나 URI를 조작해서 새로운 URI를 생성하고 싶다면
+		/* 만약 컨트롤러에서 현재 요청의 URI에 대한 정보를 얻거나 URI를 조작해서 새로운 URI를 생성하고 싶다면
 		 *  ServletUriComponentBuilder.fromRequest()를 이용
 		 *  
 		 *  Spring3.1 적용

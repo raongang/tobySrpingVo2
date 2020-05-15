@@ -460,8 +460,11 @@
 			   - Validator와 conversion을 제외하면 기본적으로 등록되는 AnnotationMethodHandlerAdapter와 DefaultAnnotationHandlerMapping 등을 변경할수 없으므로
 			     <mvc:annotation-driven> 대신 직접 빈을 등록하고 프로퍼티를 통해 설정해야 함.
 			     
-           	      	          
-	        
+	4.9 스프링3.1의 @Mvc
+	      ● RedirectAttribute와 리다이렉트뷰
+	      	
+	 
+	       
 	        
 	   	    
 	  
