@@ -416,7 +416,54 @@
 	             ● 특정 필드에만 적용되는 변환 기능 : PropertyEditor
 	             
 	4.3.4 Validator와 BindingResult, Errors       
-	             
+	4.6 MVC 네임스페이스
+	  ● <mvc:annotation-driven>
+	    - 애노테이션 방식의 컨트롤러를 사용할때 필요한 DispatcherServlet 전략 빈을 자동으로 등록해줌.
+	    
+	    자동 등록되는 빈 정보
+	      ● DefaultAnnotationHandlerMapping
+	   	  ● AnnotationMethodHandlerAdapter
+	   	    - DispatcherServlet이 자동으로 등록해주는 디폴트 핸들러 어댑터이다.
+	   	    - <mvc:annotation-driven> 은 자동으로 AnnotationMethodHandlerAdapter 을 등록하기 때문에 이때는 직접 AnnotationMethodHandlerAdapter 을 등록하면 안됨.
+	   	    - 핸들러 어댑터 전략을 빈으로 등록했으므로 그 밖의 디폴트 핸들러 어댑터 전략은 자동등록되지 않는다.
+	      ● ConfigurableWebBindingInitializer
+	        - 모든 Controller method에 자동으로 적용되는 WebDataBinder 초기화용 빈을 만들고 AnnotationMethodHandlerAdapter의 프로퍼티로 연결시켜줌.
+	        - 컨버전 서비스는 FomattingConversionServiceFactoryBean으로 등록됨.
+	        - 글로벌 검증기는 LocalValidatorFactoryBean 으로 설정되므로 JSR-303 검증용 애노테이션 기능이 자동 지원(※ JSR-303 지원라이브러리가 클래스 패스에 있어야 등록됨)
+	      ● 메세지 컨버터     
+	      ● validator 
+	        - 자동 등록되는 ConfigurableWebBindingInitializer의 validator 프로퍼티에 적용할 Validator 타입의 빈을 지정가능
+	        - 디폴트로 추가되는 jsr-303방식의 LocalValidatorFactoryBean 을 확장하거나 재구성할때 직접 빈으로 등록해줘야 함  
+	        ex) 하이버네이트 검증
+	         <mvc:annotation-driven validator=myValidator" />
+	         <bean id="myValidator" class="MyLocalValidatorFactoryBean">
+	         	//property 설정
+	         </bean>
+
+	      ● conversion-service
+	         - ConfigurableWebBindingInitializer 의 conversionService 프로퍼티에 설정될 빈을 직접 지정 가능.
+	         - default로 FomattingConversionServiceFactoryBean이 등록되겠지만 직접 개발한 컨버터나 포맷터를 적용할려면 FormattingConversionServiceFactoryBean을 빈으로 직접 등록하고 재구성한다.
+	         
+	         ex) <mvc:annotation-driven conversion-service="conversionService" />
+				<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+					<property name="converters">
+						<set>
+							<bean class="springbook.sug.web.converter.TypeConverter$StringToType" />
+							<bean class="springbook.sug.web.converter.TypeConverter$TypeToString" />
+							<bean class="springbook.sug.web.converter.GroupConverter$GroupToString" />
+							<bean class="springbook.sug.web.converter.GroupConverter$StringToGroup" />
+						</set>
+					</property>
+				</bean>	        
+				
+			※ 주의사항
+			   - Validator와 conversion을 제외하면 기본적으로 등록되는 AnnotationMethodHandlerAdapter와 DefaultAnnotationHandlerMapping 등을 변경할수 없으므로
+			     <mvc:annotation-driven> 대신 직접 빈을 등록하고 프로퍼티를 통해 설정해야 함.
+			     
+           	      	          
+	        
+	        
+	   	    
 	  
 		    
 	   
