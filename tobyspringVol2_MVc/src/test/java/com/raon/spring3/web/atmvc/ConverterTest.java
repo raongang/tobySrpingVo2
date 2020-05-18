@@ -67,7 +67,6 @@ public class ConverterTest extends AbstractDispatcherServletTest{
 		}
 	}
 	
-	
 	@Controller
 	public static class SearchController{
 		

@@ -1,5 +1,5 @@
 ㄴ개요
- 토비의 스프링3.1 Vol.2 스프링의 기술과 선택 3장 스프링웹기술과 스프링 MVC Cahpter
+ 토비의 스프링3.1 Vol.2 스프링의 기술과 선택 3장 스프링웹기술과 스프링 MVC Chapter
  
  3. 스프링 웹 프레젠테이션 계층 기술 
   root-context   - 웹 기술에서 완전히 독립적인 비지니스계층(service),데이터액세스계층(dao)
@@ -16,6 +16,7 @@
        - 스프링 웹 기술을 구성하는 다양한 전략을 DI로 구성해서 확장하도록 만들어진 서블릿/MVC의 엔진과 같은 역할.
        - 핸들러 어댑터 전략을 통해서 적절한 controller를 찾고 모든 웹 요청 정보가 담긴 HttpServletRequest 타입의 오브젝트를 전달한다.
        - 서블릿 컨테이너가 생성하고 관리하는 오브젝트이지, 스프링의 컨텍스트에서 관리하는 빈 오브젝트가 아님.
+       - 서블릿 컨테이너에서 동작하는 서블릿
      
      ModelAndView
        - Controller는 DispatcherServlet(front controller)에게 최종적으로 뷰와 프레젠테이션 계층의 구성요소를 정보로 담은 모델을 리턴 시켜 주는데, 
@@ -51,7 +52,7 @@
   - API : org.springframework.mock.web package
          
 3.3 컨트롤러(controller)
-  - 스프링에서는 컨트롤러를 handler라고 부르기도 함.
+  - 스프링에서는 컨트롤러를 handler라고 부르기도 함. 
   - 사용자 요청을 기준으로 어떤 컨트롤러(handler)에게 작업을 위임할지를 결정 해주는 것을 handler mapping 전략이라고 함.
   
  3.3.1 컨트롤러의 종류와 핸들러 어댑터
@@ -216,6 +217,28 @@
  	  - 디폴트로 DefaultRequestToViewNameTranslator가 등록되어 있음.
  	  - URL을 기준으로 뷰 이름을 결정
  	    
+3.6 스프링 3.1의 MVC
+    3-6-1 플래쉬 맵 매니저 전략.
+     ● flashMap
+       - flash attribute(하나의 요청에서 생성되어 다음 요청으로 전달되는 정보)를 저장하는 맵
+       - flash attribute는 다음 요청에서 한번 사용되고 바로 제거된다.
+       - post/redirect/get 패턴을 적용할 경우 post단계의 작업 결과 메세지를 리다이렉트된 페이지로 전달할때 주로 사용.
+       - 서버에 저장되며, 보통 POST 요청을 처리하는 controller에서 생성한다.
+       
+	 ● flashMapManager
+	   - flasMap을 저장하고, 유지하고, 조회하고, 제거하는 등의 작업을 담당하는 오브젝트를 플래쉬맵매니저라고 하고 flashMapManager interface를 구현해서 만듬.
+	   - DispatcherServlet이 미리 준비한 것을 사용. 
+
+       
+       ※  새로운 페이지로 리다이렉트하는 경우에는 HTTP요청이 바뀌므로 컨트롤러가 모델을 이용해 다음 요청의 뷰로 정보를 전달 시킬수 없다.
+      그래서 리다이렉트하는 URL의 파라미터에 정보를 담거나, http세션을 이용해야함.
+      
+      ※ 예
+      - 사용자 정보를 저장하고 사용자 목록 페이지로 리다이렉트 될때 한번만 메세지를 보여주고, 같은 페이지에서 검색 조건을 바꾸거나 직접 페이지를 갱신해서
+      동일한 웹페이지가 다시 로딩되는 경우에는 작업 직후 보여줬던 메세지가 사라져야함.
+      이럴때 flashMap이 유용.
+	        
+  
 4. 스프링 @MVC
     
     AnnotationMethodHandlerAdapter 가 호출하는 @Controller 메소드의 사용가능한 파라미터 타입과 애노테이션 종류
@@ -461,7 +484,82 @@
 			     <mvc:annotation-driven> 대신 직접 빈을 등록하고 프로퍼티를 통해 설정해야 함.
 			     
 	4.9 스프링3.1의 @Mvc
-	      ● RedirectAttribute와 리다이렉트뷰
+	    
+	   DispatcherServlet DI 가능한 전략
+       
+       ● HandlerMapping ( interface )
+           DefaultAnnotationHandlerMapping -> RequestMappingHandlerMapping변경
+            - 클라이언트의 요청을 @RequestMapping이 붙은 메소드로 매핑해줌
+            - 매핑결과는 @RequestMapping메소드의 정보를 추상화한 HandlerMethod 타입 오브젝트 
+       
+       ● HandlerMethod
+          - HandlerMethod는 @RequestMapping이 붙은 메소드의 정보를 추상화한 오브젝트 타입.
+          - 컨트롤러 오브젝트 대신 추상화된 메소드 정보를 담은 오브젝트를 핸들러 매핑의 결과로 돌려주고, 핸들러 어댑터는 HandlerMethod 오브젝트의 정보를 이용해 메소드를 실행.
+		
+		4.9.2 @RequestMppaingHanlderMapping 
+		   - 스프링 3.0의 DefaultAnnotationHanlderMapping -> RequestMappingHandlerMapping 
+		
+		4.9.3 @RequestMappingHandlerAdapter
+		   - AnnotationMethodHandlerAdapter -> RequestMappingHandlerAdapter
+  			
+  			● 파라미터 타입
+  			  - @Validated / @Valid		
+  			  - @Valid와 @RequestBody
+  			  - UriComponentBuilder    
+  			  
+		      ■ RedirectAttibutes와 리다이렉트 뷰
+		        - return "redirect:/result?status=" + status; 같은 형태로 많이 쓴다.
+		        - URL이 복잡해지거나 파라미터 조건이 많아지게 될 경우에는 문자열의 조합이 지저분해지므로 Model 오브젝트에 attribute를 추가해주면 attribute정보가 리다이렉트 URL에 자동으로 추가된다.
+		      
+		      ex) public String saveForm(@ModelAttribute("user") User user, Model model){
+		      		//user 데이터 저장, status 값 생성
+		      		model.attribute("status",status);
+		      		return "redirect:/result";
+		      }
+		        -> status 가 10이라면, /result?status=10으로 리다이렉트 됨.
+		        -> @ModelAttribute는 자동으로 Controller가 리턴하는 Model에 추가된다.
+		        -> Redirect URL에는 Model에 담긴 정보가 파라미터로 추가 되기 때문에 불필요학 @ModelAttribute 메소드가 만든 레퍼런스 정보까지 URL에 들어간다. 
+		      
+		      해결방안
+		      1. Model을 가져와서 model.asMap().clear()로 모든 내용을 제거한 뒤에 URL파라미터에 넣을 정보를 attribute를 이용해서 추가
+		      2. Spring3.1에서 RedirectAttibutes 라는 새로운 파라미터 타입지원을 이용.  
+		      3. RedirectAttributes는 Model의 서브타입이므로 사용법 동일
+		      
+		      public String saveForm(@ModelAttribute("user")User user, RedirectAttributes ra){
+		      	ra.addAttribute("status",status);
+		      	return "redirect:/result";
+		      	
+		      }
+		      
+		      ■ RedirectAttibutes와 flash attribute
+		        - flash attribute는 POST 요청에 맞춰 저장되고 다음 GET요청에서 사용됨.
+		        - flashAttribute는 GET요청에서 자동으로 model에 저장됨.
+		       ex) 
+		       
+		       public String saveForm(@ModelAttribute("user") User user, RedirectAttributes ra){
+		       		ra.addFlashAttribute("message", "저장되었습니다.");
+		       		ra.addAttribute("status",status);
+		       		return "redirect:/result";
+		       } 
+		       
+		4.9.4 @EnableWebMvc와 WebMavConfigurationSupport를 이용한 @MVC설정
+		   - @MVC DEFAULT 최신전략을 쓰기 위해서는 <mvc:annotation-driven>으로도 충분
+		   - @MVC 전략과 관련된 설정을 넣을려면 mvc namespace로는 불편하므로 자바코드를 이용한 등록 및 설정방식을 사용하는 것이 좋음
+  			
+  			● @EnableWebMvc		         
+		       - @Configuration class에 @EnableWebMvc를 붙여주면 <mvc:annotation-driven /> 과 같은 기능
+
+5. AOP와 LTW
+	5.1 애스펙트 AOP
+			       
+		       
+		      		      
+		         
+		         
+		   
+		   
+       
+	      
 	      	
 	 
 	       
@@ -472,4 +570,5 @@
 	   
       
         
+ 	
  	
