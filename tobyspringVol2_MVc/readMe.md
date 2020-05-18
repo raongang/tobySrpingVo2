@@ -551,6 +551,32 @@
 
 5. AOP와 LTW
 	5.1 애스펙트 AOP
+		5.1.1 프록시 기반 aop
+		 5.1.1.1. 프록시 기반 AOP개발 스타일의 종류와 특징
+		 
+			 ● 	AOP Interface 구현과 빈<bean>등록을 이용하는 방법            ->1
+			 ● 	AOP Interface 구현 aop 네임스페이스의 <aop:advisor> 태그를 이용하는 방법. ->2
+			 
+			 ●  임의의 자바클래스와 aop 네임스페이스의 <aop:aspect>를 이용하는 방법(Spring2.0에서도입)  ->3 
+			    - 2번과 같이 aop네임스페이스를 이용하지만, advice, advisor 개념 대신 aspect라는 개념을 이용. 
+			    - aspect : 독립적인 AOP모듈을 뜻하는 개념. 기본적으로 자바클래스를 이용해서 정의할 수 있고 특정 인터페이스를 구현할 필요가 없다.
+			    - annotation을 이용하거나 XML 의 <aop:aspectj>를 이용하여 평범한 자바 클래스를 aop aspect로 만들수 있다.
+			    
+			 ●  @AspectJ 애노테이션을 이용한 aspect 개발방법 ->4
+			    - Aspect AOP프레임워크에서 정의된 애노테이션을 이용해 aspect를 만들수 있게 해준다.
+			    - @AspectJ 문법과 aspect 정의방법을 차용했을뿐, AspectJ AOP를 사용하는 것은 아님. (주의)
+			    - @AspectJ도 동일하게 스프링의 프록시 기반 AOP를 만들때 이용.
+			    - <aop:config>등이 필요없이 애노테이션을 정의할 수 있게 해준다.
+			
+			※ 1,2의 방식은 자바 JDK에서 지원하는 다이나믹 프록시 기술을 이용해서, 복잡한 빌드 과정이나 바이트코드 조작 기술없이도 유용한 aop를 적용할수 있는 프록시 기반 AOP개발 기능을 제공.
+			※ AspectJ 
+			 - 가장 강력한 AOP프레임워크이지만 프록시를 이용하지 않는다.
+			 - spirng처럼 dynmaic proxy 방식을 이용하지 않는다.
+			 - proxy처럼 간접적인 방법이 아니라, target object를 뜯어고쳐서 부가기능을 직접 넣어주는 직접적인 방법을 이용.
+			 - compile된 target class 파일 자체를 수정하거나 클래스가 jvm에 로딩되는 시점을 가로채서 바이트코드를 조작함.			    
+					 
+		 5.1.1.2. 자동프록시 생성기와 프록시 빈  ( 3,4번에 대한 예 ) 		 
+	
 			       
 		       
 		      		      

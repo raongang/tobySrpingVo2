@@ -81,7 +81,6 @@ public class FlashMapTest extends AbstractDispatcherServletTest{
 		
 	}
 	
-	
 	@RequestMapping("/flash")
 	static class PostController implements Controller{
 		@Override

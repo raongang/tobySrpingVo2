@@ -39,7 +39,6 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 	private String[] relativeLocations;
 	private String servletPath;
 	
-	
 	public AbstractDispatcherServletTest setLocations(String ...locations) {
 		this.locations = locations;
 		return this;
@@ -182,7 +181,5 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
 			((ConfigurableApplicationContext)dispatcherServlet.getWebApplicationContext()).close();
 		}
 	}
-		
-	
 }
 
