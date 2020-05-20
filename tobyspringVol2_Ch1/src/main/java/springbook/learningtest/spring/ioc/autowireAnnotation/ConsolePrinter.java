@@ -12,4 +12,6 @@ public class ConsolePrinter implements Printer{
 		// TODO Auto-generated method stub
 		System.out.println(message);
 	}
+	
+
 }
