@@ -24,9 +24,7 @@ public abstract class AbstractDispatcherServlet31Test extends AbstractDispatcher
 		        wac.refresh(); 
 		        
 		        return wac; 
-				
 			}
-			
 		};
 	}
 

@@ -22,7 +22,6 @@ public class ScopeTest {
 	*/
 	@Test
 	public void singletoneScope() {
-		
 		ApplicationContext ac = new AnnotationConfigApplicationContext(SingletonBean.class, SingletonClientBean.class);
 		
 		//set은 중복을 허용하지 않으므로 같은 오브젝트는 여러 번 추가해도 한개만 남는다.

@@ -58,7 +58,6 @@ public class FlashMapTest extends AbstractDispatcherServletTest{
 		setClasses(PostController.class, RedirectController.class, OtherController.class);
 		
 		runService("/flash");
-		
 		HttpSession sessionSaved = request.getSession();
 		
 		//other
@@ -73,7 +72,6 @@ public class FlashMapTest extends AbstractDispatcherServletTest{
 		}
 		
 		sessionSaved = request.getSession();
-		
 		//redirect
 		initRequest("/redirect");
 		request.setSession(sessionSaved);

@@ -23,8 +23,7 @@ public class UriComponentBuilderTest {
 		 *  Spring3.1 적용
 		 *    - 파라미터에 넣으면 현재 요청의 URI를 기준으로 생성된 UriComponentBuilder를 받을수 있음.
 		 *  @RequestMapping(...)
-		 *  public String uri(UriComponentBuilder uriComponentBuilder){
-		 *  
+		 *  public String uri(UriComponentBuilder uriComponentBuilder){  
 		 *   }
 		 */
 		
