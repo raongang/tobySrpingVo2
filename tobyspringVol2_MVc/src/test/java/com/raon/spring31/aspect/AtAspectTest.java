@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -37,11 +38,22 @@ public class AtAspectTest {
 		hello.makeHello("Spring", 2);
 		int result = hello.add(1, 2);
 		
+		
+		/*
+		HelloWorld helloWorld = ac.getBean(HelloWorld.class);
+		helloWorld.hello();
+		User u = new User();
+		u.id = 1; u.name = "Test";
+		helloWorld.printUser(u);
+		
 		HelloAspect aspect = ac.getBean(HelloAspect.class);
+	
 		System.out.println(aspect.resultCombine);
 		System.out.println(aspect.resultReturnString);
 		System.out.println(aspect.resultHelloClass);
 		System.out.println(aspect.resultCommon);
+		
+		*/
 	}
 	
 	@Aspect 
@@ -68,21 +80,62 @@ public class AtAspectTest {
 		 *      - return type, method, parameter 3가지는 필수 항목.
 		 * */
 		
-		//@Pointcut("execution(String *(..))") private void returnString() {}
+		//@Pointcut("execution(String *(..))") private void returnString() {}														
 		
-		/**/
+		/* Anno이라는 어노테이션이 붙은 단일 파라미터를 갖는 메소드를 선택. */
+		//@Pointcut("@args(com.raon.spring31.aspect.AtAspectTest.Anno)") private void retrunString() {}
+		
+		/* type 패턴만 이용 선별 
+ 		 * 단, 타킷 클래스의 타입에만 적용되며, 조인포인트는 타킷 클래스 안에서 선정된것만 선정됨.
+ 		 * 클래스 혹은 인터페이스 단위까지만 지정가능.
+ 		 */
+		//@Pointcut("within(com.*)") private void helloClass() {}
+		//@Pointcut("within(com.raon.spring31.aspect.*)") private void helloClass() {}  
+		//@Pointcut("returnString() || helloClass()") private void combine() {}
+		//@Pointcut("returnString() && args(String)") private void common() {} --makeHello(String name) 선정
 		
 		
+//		@Before("returnString()") //point cut 이름 
+//		public void callReturnString(JoinPoint jp) {
+//			System.out.println("jp.getSignature().getDeclaringTypeName() \t" + jp.getSignature().getDeclaringTypeName());
+//			System.out.println("jp.getSignature().getName() \t" + jp.getSignature().getName());
+//			for(Object arg : jp.getArgs()) {
+//			System.out.println("arg \t" + arg);
+//			}
+//			resultReturnString.add(jp.getSignature().getDeclaringType().getSimpleName() + "/" + jp.getSignature().getName());
+//		}
 		
-		@Before("returnString()") //point cut 이름 
-		public void callReturnString(JoinPoint jp) {
-			System.out.println("jp.getSignature().getDeclaringTypeName() \t" + jp.getSignature().getDeclaringTypeName());
-			System.out.println("jp.getSignature().getName() \t" + jp.getSignature().getName());
-			for(Object arg : jp.getArgs()) {
-			System.out.println("arg \t" + arg);
-			}
+//		@Before("helloClass()") public void callLogHelloClass(JoinPoint jp) {
+//		resultHelloClass.add(jp.getSignature().getDeclaringType().getSimpleName() + "/" + jp.getSignature().getName());
+//		}
+		
+//		@Before("combine()") public void callLogCombine(JoinPoint jp) {
+//		resultCombine.add(jp.getSignature().getDeclaringType().getSimpleName() + "/" + jp.getSignature().getName());
+//		}
+		
+//		@Before("common()") public void callLogCommon(JoinPoint jp) {
+//		resultCommon.add(jp.getSignature().getDeclaringType().getSimpleName() + "/" + jp.getSignature().getName());
+//		}
+		
+//		@Before("args(com.raon.spring31.aspect.AtAspectTest.User)") 
+//		public void user(JoinPoint jp) {
+//			((User)(jp.getArgs()[0])).name = "Toby";
+//		}
+		
+		
+		/*
+		 *  @AfterReturning	
+		 *    - 타킷 오브젝트의 메소드가 실행을 마친 뒤에 실행되는 advice (정상종료에 한함)
+		 *    - 메소드의 리턴값 참조가능
+		 *    - 리턴값 자체를 변경할순 없음. 리턴값을 변경할려면 @Around 사용.
+		 *    - JoinPoint 파라미터와 returning을 함께 이용할 경우에는 JoinPoint가 우선해야함.
+		 *    - 
+		 
+		@AfterReturning(pointcut="execution(* makeHello(..))", returning="ret")
+		public void ret(JoinPoint jp, String ret) {
+			System.out.println("RET : " + ret);
 		}
-		
+		*/
 		
 		
 		/*
@@ -95,22 +148,24 @@ public class AtAspectTest {
 		 * 
 		 * */
 		
-		//@Before("@target(an)")
-		//@Before("@target(com.raon.spring31.aspect.AtAspectTest)")
-//		@Before("returnString()")
-//		public void an(JoinPoint jp, Anno an){
-//			System.out.println(an);
-//		}
+		@Before("@target(an)")
+		public void an(JoinPoint jp, Anno an){
+			System.out.println(an);
+		}
+		
+//		@Before("@target(com.raon.spring31.aspect.AtAspectTest$Anno)")
+//		public void  an(JoinPoint jp) {}
 		
 	}
 	
 	//사용자 정의 annotation
-	/*
+	
 	@Target({ElementType.TYPE, ElementType.PARAMETER})
 	@Retention(RetentionPolicy.RUNTIME)
+	
 	public @interface Anno{
 		String value() default "a";
-	}*/
+	}
 	
 	interface Hello{
 		int add(int a, int b);
@@ -118,7 +173,7 @@ public class AtAspectTest {
 		String makeHello(String name, int repeat);
 	}
 	
-	//@Anno("b")
+	@Anno("b")
 	static class HelloImpl implements Hello{
 
 		@Override
@@ -142,17 +197,14 @@ public class AtAspectTest {
 		
 	}//end HelloImpl
 	
-	//@Anno("c") 
+	@Anno("c") 
 	static class HelloWorld {
-		public void hello() { System.out.println("Hello World"); }
-		public void printUser(User u) { System.out.println(u); }
+		public void hello() { System.out.println("Hello World");  }
+		public void printUser(User u) {  System.out.println(u);  }
 	}
 	
 	static public class User {
 		int id; String name;
 		public String toString() { return "User [id=" + id + ", name=" + name + "]"; }
 	}
-	
-	
-	
 }

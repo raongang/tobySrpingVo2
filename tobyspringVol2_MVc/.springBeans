@@ -8,6 +8,7 @@
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
 		<config>src/test/java/com/raon/spring3/web/view/jstlview.xml</config>
+		<config>src/test/java/com/raon/spring3/test/context.xml</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/spring/test-context.xml</config>
