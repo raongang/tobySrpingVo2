@@ -7,3 +7,4 @@
 
 	<bean id="beanA"  class="com.raon.spring3.test.TestContextTest$BeanA" />
 </beans>
+ 
