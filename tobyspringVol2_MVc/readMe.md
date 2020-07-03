@@ -510,6 +510,7 @@
 		      ■ RedirectAttibutes와 리다이렉트 뷰
 		        - return "redirect:/result?status=" + status; 같은 형태로 많이 쓴다.
 		        - URL이 복잡해지거나 파라미터 조건이 많아지게 될 경우에는 문자열의 조합이 지저분해지므로 Model 오브젝트에 attribute를 추가해주면 attribute정보가 리다이렉트 URL에 자동으로 추가된다.
+		        
 		      
 		      ex) public String saveForm(@ModelAttribute("user") User user, Model model){
 		      		//user 데이터 저장, status 값 생성
