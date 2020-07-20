@@ -5,15 +5,15 @@
   root-context   - 웹 기술에서 완전히 독립적인 비지니스계층(service),데이터액세스계층(dao)
   servlet-context - 스프링 웹기술을 기반으로 동작하는 웹 관련 빈을 담음 ( jsp, controller )
   
-  - context 분리의 이유는 스프링 웹 서블릿 컨텍스트를 통째로 다른 기술로 대체하기 위해서.
+  context 분리의 이유는 스프링 웹 서블릿 컨텍스트를 통째로 다른 기술로 대체하기 위해서.
    
   3.1 스프링 제공 웹프레임 워크
     - spring servlet/mvc ( front controller 역할을 하는 DispatcherServlet을 핵심 엔진으로 이용 ) 
-  
+    
   3.1.2 스프링 MVC와 DispatcherServlet 전략
      DispatcherServlet
        - 스프링 웹 기술의 핵심이자 기반.
-       - 스프링 웹 기술을 구성하는 다양한 전략을 DI로 구성해서 확장하도록 만들어진 서블릿/MVC의 엔진과 같은 역할.
+       - 스프링 웹 기술을 구성하는 다양한 전략을 DI로 구성해서 확장하도록 만들어진 서블릿 MVC의 엔진과 같은 역할.
        - 핸들러 어댑터 전략을 통해서 적절한 controller를 찾고 모든 웹 요청 정보가 담긴 HttpServletRequest 타입의 오브젝트를 전달한다.
        - 서블릿 컨테이너가 생성하고 관리하는 오브젝트이지, 스프링의 컨텍스트에서 관리하는 빈 오브젝트가 아님.
        - 서블릿 컨테이너에서 동작하는 서블릿
@@ -228,7 +228,6 @@
 	 ● flashMapManager
 	   - flasMap을 저장하고, 유지하고, 조회하고, 제거하는 등의 작업을 담당하는 오브젝트를 플래쉬맵매니저라고 하고 flashMapManager interface를 구현해서 만듬.
 	   - DispatcherServlet이 미리 준비한 것을 사용. 
-
        
        ※  새로운 페이지로 리다이렉트하는 경우에는 HTTP요청이 바뀌므로 컨트롤러가 모델을 이용해 다음 요청의 뷰로 정보를 전달 시킬수 없다.
       그래서 리다이렉트하는 URL의 파라미터에 정보를 담거나, http세션을 이용해야함.
@@ -347,7 +346,6 @@
 			  
   4.3 모델 바인딩과 검증
     Controller method에 @ModelAttribute가 지정된 파라미터를 @Controller 메소드에 추가시 동작방식.
-      
       1. 파라미터 타입의 오브젝트 생성
         - @ModelAttribute User user 일 경우 User타입 오브젝트 생성 
         - default생성자 필수
